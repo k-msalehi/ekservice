@@ -19,6 +19,6 @@ return [
    ],
 
    'sms'=>[
-      'otpLifeTime' => 120, //in seconds
+      'otpLifeTime' => 900, //in seconds
    ],
 ];

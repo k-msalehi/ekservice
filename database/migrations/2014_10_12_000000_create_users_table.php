@@ -25,8 +25,8 @@ return new class extends Migration
             $table->unsignedInteger('otp_expire')->nullable()->default(null);
             $table->unsignedTinyInteger('role')->default(config('constants.roles.customer'));
             $table->rememberToken();
-            $table->unsignedTinyInteger('status')->default(config('constants.statuses.active'));
             $table->string('hash')->nullable()->default(null);
+            $table->unsignedTinyInteger('status')->default(config('constants.statuses.active'));
             $table->timestamps();
         });
     }

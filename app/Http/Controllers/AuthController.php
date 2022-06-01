@@ -7,6 +7,7 @@ use App\Rules\IrMobile;
 use App\Services\Helpers\Helper;
 use App\Services\Sms\Sms;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 
@@ -45,15 +46,16 @@ class AuthController extends Controller
         }
         $hash = hash('md5', Str::random(12));
         $user->hash = $hash;
-
+        $user->otp = bcrypt($token);
+        $user->otp_expire = time() + config('constants.sms.otpLifeTime');
+        $user->save();
         return app('res')->success(['hash' => $hash]);
-        // return app('res')->success($user->createToken('mainToken', ['wallpaper:manage'])->plainTextToken);
     }
 
     /**
-     * check 'otp'
+     * check 'tel', 'otp', 'hash' from request.
      */
-    public function checkLoginCode(Request $request, Helper $helper, $tel)
+    public function checkLoginCode(Request $request, Helper $helper)
     {
         $data = $request->all();
         $data['tel'] = $helper->prepareTel($helper->faToEnNum($data['tel']));
@@ -62,6 +64,7 @@ class AuthController extends Controller
             'otp' => ['required', 'numeric'],
             'hash' => ['required', 'string'],
             'tel' => ['required', new IrMobile],
+            'remember' => ['nullable', 'boolean'],
         ]);
 
         if ($validator->fails()) {
@@ -69,17 +72,21 @@ class AuthController extends Controller
         }
 
         $user = User::where('tel', $data['tel'])->firstOrFail();
-        $otp = $user->otp;
-        if ($otp->datetime < (time() - 3 * 60)) {
-            return $this->expiredLoginRedirect();
+
+        if ($user->hash != $data['hash']) {
+            return app('res')->error('کد اعتبارسنجی/هش اشتباه است.');
         }
-        if (Hash::check($request->get('otp'), $otp->code)) {
-            $request->session()->regenerate();
-            auth()->login($user, ($request->get('remember') == 'yes'));
-            $this->updateCartData();
-            return redirect()->intended('admin/dashboard');
+
+        if ($user->otp_expire < time()) {
+            return app('res')->error('کد تایید منقضی شده است.');
+        }
+        if (Hash::check($request->get('otp'), $user->otp)) {
+            auth()->login($user, ($request->get('remember')));
+            $user->otp_expire = null;
+            $user->save();
+            return app('res')->success(['apiToken' => $user->createToken('apiToken1')->plainTextToken]);
         } else {
-            return back()->withErrors(['otp' => 'کد تایید وارد شده اشتباه است.']);
+            return app('res')->error('کد تایید اشتباه است.');
         }
     }
 }
