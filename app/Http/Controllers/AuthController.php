@@ -20,7 +20,7 @@ class AuthController extends Controller
     public function login(Request $request, Helper $helper, Sms $sms)
     {
         $data = $request->all();
-        $data['tel'] = $helper->prepareTel($helper->faToEnNum($data['tel']));
+        $data['tel'] = $helper->prepareTel($helper->faToEnNum($request->get('tel')));
 
         $validator = Validator::make($data, [
             'tel' => ['required', new IrMobile],
@@ -58,7 +58,7 @@ class AuthController extends Controller
     public function checkLoginCode(Request $request, Helper $helper)
     {
         $data = $request->all();
-        $data['tel'] = $helper->prepareTel($helper->faToEnNum($data['tel']));
+        $data['tel'] = $helper->prepareTel($helper->faToEnNum($request->get('tel')));
 
         $validator = Validator::make($data, [
             'otp' => ['required', 'numeric'],

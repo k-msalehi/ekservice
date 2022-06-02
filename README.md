@@ -1,64 +1,286 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
-
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
-
-## About Laravel
-
 Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## Endpoints
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+**Login/Register**
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+`POST /login`
 
-## Learning Laravel
+Inputs:
+```
+tel
+````
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+Output on success:
+```
+{
+    "success": true,
+    "message": "success",
+    "data": {
+        "hash": "938c55560cd7d8c1c06f678a74dffd6e"
+    }
+}
+```
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+Output on failure:
+```
+{
+    "success": false,
+    "message": "validation error",
+    "data": {
+        "tel": [
+            "\u0641\u06cc\u0644\u062f tel \u0627\u0644\u0632\u0627\u0645\u06cc \u0627\u0633\u062a."
+        ]
+    }
+}
+```
 
-## Laravel Sponsors
+`POST /checkLoginCode`
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+Inputs:
+```
+hash
+tel
+otp
+````
 
-### Premium Partners
+On success
+```
+{
+    "success": true,
+    "message": "success",
+    "data": {
+        "apiToken": "XXXXXXXXXXXXXXXXXXXXXXXXXXX"
+    }
+}
+```
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+On failure
+```
+{
+    "success": false,
+    "message": "validation error",
+    "data": {
+        "hash": [
+            "\u0641\u06cc\u0644\u062f hash \u0627\u0644\u0632\u0627\u0645\u06cc \u0627\u0633\u062a."
+        ]
+    }
+}
+```
 
-## Contributing
+---
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+**Get a single image by id**
 
-## Code of Conduct
+`GET /wallpaper/wallpapers/{id}`
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+Output:
+```{
+  "success": true,
+  "data": {
+    "id": 1,
+    "url": "https://picsum.photos/id/995/600/500",
+    "title": "non minus",
+    "tags": [
+      {
+        "id": 1,
+        "title": "طبیعت",
+        "slug": "nature",
+        "created_at": null,
+        "updated_at": null,
+        "pivot": {
+          "wallpaper_id": 1,
+          "tag_id": 1
+        }
+      },
+      {
+        "id": 2,
+        "title": "آیفون",
+        "slug": "iphone",
+        "created_at": null,
+        "updated_at": null,
+        "pivot": {
+          "wallpaper_id": 1,
+          "tag_id": 2
+        }
+      },
+      {
+        "id": 3,
+        "title": "کهکشان",
+        "slug": "galaxy",
+        "created_at": null,
+        "updated_at": null,
+        "pivot": {
+          "wallpaper_id": 1,
+          "tag_id": 3
+        }
+      }
+    ],
+    "likes": 2,
+    "created_at": "2022-01-20",
+    "updated_at": "2022-01-20"
+  },
+  "message": "Wallpaper fetched."
+}
+```
+---
 
-## Security Vulnerabilities
+**Get All images with specific tag**
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+`GET /wallpaper/wallpapers/tag/{slug}`
 
-## License
+Output is same as `/wallpaper/wallpapers` with requested tag
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+---
+**Get all tags**
+
+`GET /wallpaper/tags`
+
+Output:
+```
+[
+  {
+    "id": 1,
+    "slug": "nature",
+    "title": "طبیعت",
+    "image": "https://picsum.photos/id/1043/400/500"
+  },
+  {
+    "id": 2,
+    "slug": "iphone",
+    "title": "آیفون",
+    "image": "https://picsum.photos/id/719/700/700"
+  },
+  {
+    "id": 3,
+    "slug": "galaxy",
+    "title": "کهکشان",
+    "image": "https://picsum.photos/id/988/400/400"
+  }
+]
+```
+---
+**Login and get API token**
+
+
+`POST /login`  
+Output:
+```
+{
+  "success": true,
+  "data": {
+    "token": "1|hkJQ8NaCXGLtS13G6LhVK5BvtJKxZI4Sz07h3ogK",
+    "name": "admin"
+  },
+  "message": "User signed in"
+}
+```
+---
+**All CRUD actions must have Authorization Header Using Bearer Token**
+ 
+Exapmle:<br> `Authorization: Bearer 1|PnZaOacPyHjjOA7eOcSJT33VxJuvUo8TGVBnW186`
+
+---
+
+**Create a new image/wallpaper**
+
+`POST  /wallpaper/wallpapers`
+
+Params:
+
+- `title` image title
+- `url` image full URL
+- `likes` number of liker
+- `tags[]` (as array) each wallpaper/image can have multiple tags 
+
+After successful image creation, system will return created Item.
+```
+{
+  "success": true,
+  "data": {
+    "id": 52,
+    "url": "https://via.placeholder.coem/500x500.png?text=repudiandae%20w",
+    "title": "yes",
+    "tags": [
+      {
+        "id": 1,
+        "title": "طبیعت",
+        "slug": "nature",
+        "created_at": null,
+        "updated_at": null,
+        "pivot": {
+          "wallpaper_id": 52,
+          "tag_id": 1
+        }
+      },
+      {
+        "id": 2,
+        "title": "آیفون",
+        "slug": "iphone",
+        "created_at": null,
+        "updated_at": null,
+        "pivot": {
+          "wallpaper_id": 52,
+          "tag_id": 2
+        }
+      }
+    ],
+    "likes": null,
+    "created_at": "2022-01-23",
+    "updated_at": "2022-01-23"
+  },
+  "message": "Wallpaper created."
+}
+```
+
+**Update a wallpaper**
+
+`POST http://localhost:8000/wallpaper/wallpapers/{id}`
+
+Params:
+
+- `title` image new title
+- `url` image new full URL
+- `likes` number of liker
+- `tags[]` (as array) each wallpaper/image can have multiple tags 
+- `_method` MUST equals to 'PATCH'update readme.md
+
+
+After successful image update, system will return created Item.
+```
+{
+  "success": true,
+  "data": {
+    "id": 52,
+    "url": "https://via.placeholder.coem/500x500.png?text=repudiandae%20w",
+    "title": "yes",
+    "tags": [
+      {
+        "id": 1,
+        "title": "طبیعت",
+        "slug": "nature",
+        "created_at": null,
+        "updated_at": null,
+        "pivot": {
+          "wallpaper_id": 52,
+          "tag_id": 1
+        }
+      },
+      {
+        "id": 2,
+        "title": "آیفون",
+        "slug": "iphone",
+        "created_at": null,
+        "updated_at": null,
+        "pivot": {
+          "wallpaper_id": 52,
+          "tag_id": 2
+        }
+      }
+    ],
+    "likes": 0,
+    "created_at": "2022-01-23",
+    "updated_at": "2022-01-23"
+  },
+  "message": "Wallpaper updated."
+}
+```
