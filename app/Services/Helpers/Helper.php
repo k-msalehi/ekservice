@@ -62,4 +62,10 @@ class Helper
             && preg_match('/bot|crawl|slurp|spider|mediapartners/i', $_SERVER['HTTP_USER_AGENT'])
         );
     }
+
+    public function countWords(string $string) :int
+    {
+        return str_word_count($string);
+    }
+
 }

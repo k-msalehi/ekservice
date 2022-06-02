@@ -28,11 +28,11 @@ return new class extends Migration
             $table->char('national_id',10);
             $table->string('lon');
             $table->string('lat');
-            $table->string('user_note',512)->nullable()->default(null);
+            $table->string('user_note',512);
             $table->string('admin_note',512)->nullable()->default(null);
-            $table->unsignedInteger('rough_price');
-            $table->unsignedInteger('paid_price');
-            $table->unsignedInteger('final_price');
+            $table->unsignedInteger('rough_price')->nullable()->default(null);
+            $table->unsignedInteger('paid_price')->nullable()->default(null);
+            $table->unsignedInteger('final_price')->nullable()->default(null);
             $table->tinyInteger('status')->default();
             $table->string('delivery_code')->nullable()->default(null);
             $table->timestamps();

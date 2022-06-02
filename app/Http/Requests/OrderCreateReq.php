@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Rules\FaAlpha;
 use App\Rules\IrMobile;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
@@ -33,9 +34,19 @@ class OrderCreateReq extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|string',
-            'last_name' => 'required|string|email|unique:users,email',
-            'password' => 'required|confirmed'
+            //samsung,apple,xiaomi,huawei,lg,htc,oppo,vivo,realme,oneplus,nokia,sony,blackberry,motorola,lenovo,xiaolajiao
+            'device_type' => ['required', 'in:mobile,tablet'],
+            'device_brand' => ['required', 'in:samsung,apple,xiaomi,lg,nokia'],
+            'device_model' => ['required', 'string','max:32','min:2'],
+            'user_note' =>  ['required', 'string','max:512','min:3'],
+            'name' => ['required', 'string','max:64','min:3', new FaAlpha],
+            'national_id' => ['required', 'string','max:64','min:3'],
+            'tel' => ['required',new IrMobile],
+            'province_id' => ['required', 'exists:provinces,id'],
+            'city_id' => ['required', 'exists:cities,id'],
+            'address' => ['required', 'string','max:128','min:3'],
+            'lat' => ['required', 'numeric'],
+            'lon' => ['required', 'numeric'],
         ];
     }
 }
