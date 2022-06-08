@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\URL;
 |
 */
 
-Route::any('order/create', [OrderController::class, 'create']);
+Route::post('order/create', [OrderController::class, 'create']);
 Route::post('login', [AuthController::class, 'login'])->name('login');
 
 Route::post('checkLoginCode', [AuthController::class, 'checkLoginCode'])->name('checkLoginCode');

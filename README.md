@@ -69,9 +69,50 @@ On failure
 
 ---
 
-**other**
+**Submit new order**
 
-`GET `
+`POST /order/create`
 
+Inputs:
+```
+device_type 
+device_brand 
+device_model
+user_note
+name
+national_id
+tel
+province_id
+city_id
+address
+lat (optional)
+lon (optional)
+````
+
+On success
+```
+{
+    "success": true,
+    "message": "success",
+    "data": {
+        "device_type": "mobile",
+        "device_brand": "samsung",
+        "device_model": "a33",
+        "user_note": "\u062e\u0631\u0627\u0628 \u0647\u0633\u062a",
+        "name": "\u0645\u062d\u0645\u062f \u0635\u0627\u0644\u062d\u06cc",
+        "national_id": "4990139593",
+        "tel": "09116659582",
+        "province_id": 8,
+        "city_id": "301",
+        "address": "\u062e \u0645\u0648\u0644\u0648\u06cc \u062e \u062d\u062c\u062a",
+        "lat": "123",
+        "lon": "456",
+        "user_id": 1,
+        "updated_at": "2022-06-08T06:22:32.000000Z",
+        "created_at": "2022-06-08T06:22:32.000000Z",
+        "id": 4
+    }
+}
+```
 
 ---
