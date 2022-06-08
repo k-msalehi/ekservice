@@ -14,13 +14,12 @@ return new class extends Migration
     public function up()
     {
         Schema::create('orders', function (Blueprint $table) {
-            $table->id();
+            $table->id()->from(1001);
             $table->foreignId('user_id')->constrained();
             $table->string('device_brand');
             $table->string('device_type');
             $table->string('device_model');
             $table->string('name');
-            $table->string('tel');
             $table->string('email')->nullable()->default(null);
             $table->string('province_id');
             $table->string('city_id');
@@ -31,6 +30,7 @@ return new class extends Migration
             $table->string('user_note',512);
             $table->string('admin_note',512)->nullable()->default(null);
             $table->unsignedInteger('rough_price')->nullable()->default(null);
+            $table->unsignedInteger('requested_price')->nullable()->default(null);
             $table->unsignedInteger('paid_price')->nullable()->default(null);
             $table->unsignedInteger('final_price')->nullable()->default(null);
             $table->tinyInteger('status')->default();

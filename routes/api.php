@@ -29,7 +29,7 @@ Route::get('checkUser', function () {
 Route::post('login', [AuthController::class, 'login'])->name('login');
 Route::post('checkLoginCode', [AuthController::class, 'checkLoginCode'])->name('checkLoginCode');
 
-Route::middleware(['auth:sanctum'])->prefix('orders')->name('orders.')->group(function () {
+Route::prefix('orders')->name('orders.')->group(function () {
     Route::get('/', [OrderController::class, 'index']);
     Route::get('{order}', [OrderController::class, 'show']);
     Route::post('/', [OrderController::class, 'store']);

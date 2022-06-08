@@ -17,7 +17,6 @@ class Order extends Model
         'user_note',
         'name',
         'national_id',
-        'tel',
         'province_id',
         'city_id',
         'address',

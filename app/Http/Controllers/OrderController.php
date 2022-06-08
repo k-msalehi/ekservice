@@ -17,7 +17,7 @@ class OrderController extends Controller
 
     public function show(Order $order)
     {
-        # code...
+        return app('res')->success($order);
     }
     public function store(OrderCreateReq $request)
     {

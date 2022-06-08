@@ -90,7 +90,6 @@ device_model
 user_note
 name
 national_id
-tel
 province_id
 city_id
 address
@@ -110,7 +109,6 @@ Output on success example:
         "user_note": "\u062e\u0631\u0627\u0628 \u0647\u0633\u062a",
         "name": "\u0645\u062d\u0645\u062f \u0635\u0627\u0644\u062d\u06cc",
         "national_id": "4990139593",
-        "tel": "09116659582",
         "province_id": 8,
         "city_id": "301",
         "address": "\u062e \u0645\u0648\u0644\u0648\u06cc \u062e \u062d\u062c\u062a",
