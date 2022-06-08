@@ -19,9 +19,9 @@ use Illuminate\Support\Facades\URL;
 
 Route::get('checkUser', function () {
     if (auth()->check())
-        return response()->json(['login' => true], 200);
+        return response()->json(['login' => true, 'userDate' => auth()->user()], 200);
     else
-        return response()->json(['login' => false], 200);
+        return response()->json(['login' =>  false], 200);
 });
 Route::post('order/create', [OrderController::class, 'create']);
 Route::post('login', [AuthController::class, 'login'])->name('login');
