@@ -84,7 +84,7 @@ class AuthController extends Controller
             auth()->login($user, ($request->get('remember')));
             $user->otp_expire = null;
             $user->save();
-            return app('res')->success(['apiToken' => $user->createToken('apiToken1')->plainTextToken]);
+            return app('res')->success(['apiToken' => $user->createToken('apiToken1')->plainTextToken, 'role' => $user->role]);
         } else {
             return app('res')->error('کد تایید اشتباه است.');
         }

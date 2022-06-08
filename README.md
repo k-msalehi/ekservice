@@ -49,7 +49,8 @@ Output on success example:
     "success": true,
     "message": "success",
     "data": {
-        "apiToken": "XXXXXXXXXXXXXXXXXXXXXXXXXXX"
+        "apiToken": "2|zDXTieXZDPz7Lc1esbTblxxzqAbcwQQdiC3FiTmr",
+        "role": 3
     }
 }
 ```

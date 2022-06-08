@@ -31,7 +31,7 @@ Route::post('checkLoginCode', [AuthController::class, 'checkLoginCode'])->name('
 
 Route::prefix('orders')->name('orders.')->group(function () {
     Route::get('/', [OrderController::class, 'index']);
-    Route::get('{order}', [OrderController::class, 'show']);
+    Route::get('{order}', [OrderController::class, 'show'])->middleware(['auth:sanctum', 'can:view,order']);
     Route::post('/', [OrderController::class, 'store']);
     // Route::post('{id}/update', [OrderController::class, 'update']);
     // Route::post('{id}/delete', [OrderController::class, 'delete']);

@@ -41,7 +41,6 @@ class OrderCreateReq extends FormRequest
             'user_note' =>  ['required', 'string','max:512','min:3'],
             'name' => ['required', 'string','max:64','min:3', new FaAlpha],
             'national_id' => ['required', 'string','max:64','min:3'],
-            'tel' => ['required',new IrMobile],
             'province_id' => ['required', 'exists:provinces,id'],
             'city_id' => ['required', 'exists:cities,id'],
             'address' => ['required', 'string','max:128','min:3'],

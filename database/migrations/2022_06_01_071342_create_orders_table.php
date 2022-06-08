@@ -25,8 +25,8 @@ return new class extends Migration
             $table->string('city_id');
             $table->string('address');
             $table->char('national_id',10);
-            $table->string('lon')->default(null);
-            $table->string('lat')->default(null);
+            $table->string('lon')->nullable()->default(null);
+            $table->string('lat')->nullable()->default(null);
             $table->string('user_note',512);
             $table->string('admin_note',512)->nullable()->default(null);
             $table->unsignedInteger('rough_price')->nullable()->default(null);

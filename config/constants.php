@@ -10,8 +10,8 @@ return [
    ],
    'roles' => [
       'admin' => 1,
-      'customer' => 2,
-      'guest' => 3,
+      'expert' => 2,
+      'customer' => 3,
    ],
    'statuses'=>[
       'active' => 1,
