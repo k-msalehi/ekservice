@@ -10,7 +10,7 @@ Inputs:
 tel
 ````
 
-Output on success:
+Output on success example:
 ```
 {
     "success": true,
@@ -21,7 +21,7 @@ Output on success:
 }
 ```
 
-Output on failure:
+Output on failure example:
 ```
 {
     "success": false,
@@ -43,7 +43,7 @@ tel
 otp
 ````
 
-On success
+Output on success example:
 ```
 {
     "success": true,
@@ -54,7 +54,7 @@ On success
 }
 ```
 
-On failure
+Output on failure example:
 ```
 {
     "success": false,
@@ -65,6 +65,15 @@ On failure
         ]
     }
 }
+```
+
+`GET /checkUser`
+
+determine if user is authenticated or not
+
+Response example:
+```
+{"login":false}
 ```
 
 ---
@@ -89,7 +98,7 @@ lat (optional)
 lon (optional)
 ````
 
-On success
+Output on success example:
 ```
 {
     "success": true,

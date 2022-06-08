@@ -17,12 +17,18 @@ use Illuminate\Support\Facades\URL;
 |
 */
 
+Route::get('checkUser', function () {
+    if (auth()->check())
+        return response()->json(['login' => true], 200);
+    else
+        return response()->json(['login' => false], 200);
+});
 Route::post('order/create', [OrderController::class, 'create']);
 Route::post('login', [AuthController::class, 'login'])->name('login');
 
 Route::post('checkLoginCode', [AuthController::class, 'checkLoginCode'])->name('checkLoginCode');
 
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
     return $request->user();
 });
