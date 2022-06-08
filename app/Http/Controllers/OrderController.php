@@ -13,12 +13,11 @@ class OrderController extends Controller
 {
     public function index()
     {
-        # code...
+        return OrderResource::collection(Order::where('user_id', auth()->user()->id)->orderBy('id','DESC')->get());
     }
 
     public function show(Order $order)
     {
-        dd('s');
         if ($order)
             return app('res')->success(new OrderResource($order));
         else
@@ -27,8 +26,7 @@ class OrderController extends Controller
     public function store(OrderCreateReq $request)
     {
         $data = $request->all();
-        //TODO: check user id;
-        $data['user_id'] = 1;
+        $data['user_id'] = auth()->user()->id;
         if ($order = Order::create($data))
             return app('res')->success(new OrderResource($order));
         else

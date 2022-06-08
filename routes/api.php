@@ -16,7 +16,6 @@ use Illuminate\Support\Facades\URL;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-
 Route::get('checkUser', function () {
     if (auth()->check())
         return response()->json(['login' => true, 'sanctum' => false, 'userDate' => auth()->user()], 200);
@@ -29,9 +28,9 @@ Route::get('checkUser', function () {
 Route::post('login', [AuthController::class, 'login'])->name('login');
 Route::post('checkLoginCode', [AuthController::class, 'checkLoginCode'])->name('checkLoginCode');
 
-Route::prefix('orders')->name('orders.')->group(function () {
+Route::middleware(['auth:sanctum'])->prefix('orders')->name('orders.')->group(function () {
     Route::get('/', [OrderController::class, 'index']);
-    Route::get('{order}', [OrderController::class, 'show'])->middleware(['auth:sanctum', 'can:view,order']);
+    Route::get('{order}', [OrderController::class, 'show'])->middleware(['can:view,order']);
     Route::post('/', [OrderController::class, 'store']);
     // Route::post('{id}/update', [OrderController::class, 'update']);
     // Route::post('{id}/delete', [OrderController::class, 'delete']);

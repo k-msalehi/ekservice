@@ -30,9 +30,6 @@ class OrderPolicy
      */
     public function view(User $user, Order $order)
     {
-        if ($user->tokenCan('server:update')) {
-            dd('fffff');
-        }
         return ($user->role == config('constants.roles.admin') ||
             $user->role == config('constants.roles.expert') ||
             $user->id == $order->user_id);
