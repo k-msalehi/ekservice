@@ -23,11 +23,16 @@ Route::get('checkUser', function () {
     else
         return response()->json(['login' =>  false], 200);
 });
-Route::post('order/create', [OrderController::class, 'create']);
 Route::post('login', [AuthController::class, 'login'])->name('login');
-
 Route::post('checkLoginCode', [AuthController::class, 'checkLoginCode'])->name('checkLoginCode');
 
+Route::prefix('orders')->name('orders.')->group(function () {
+    Route::get('/', [OrderController::class, 'index']);
+    Route::get('{id}', [OrderController::class, 'show']);
+    Route::post('/', [OrderController::class, 'store']);
+    Route::post('{id}/update', [OrderController::class, 'update']);
+    Route::post('{id}/delete', [OrderController::class, 'delete']);
+});
 
 Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
     return $request->user();

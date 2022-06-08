@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Validator;
 
 class OrderController extends Controller
 {
-    public function create(OrderCreateReq $request)
+    public function store(OrderCreateReq $request)
     {
         $data = $request->all();
         //TODO: check user id;

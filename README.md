@@ -80,7 +80,7 @@ Response example:
 
 **Submit new order**
 
-`POST /order/create`
+`POST /orders`
 
 Inputs:
 ```
