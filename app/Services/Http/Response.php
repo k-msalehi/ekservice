@@ -23,7 +23,7 @@ class Response
      *
      * @return \Illuminate\Http\Response
      */
-    public function error($error, $errorMessages = [], $code = 404)
+    public function error($error, $errorMessages = [], $code = 400)
     {
         $response = [
             'success' => false,

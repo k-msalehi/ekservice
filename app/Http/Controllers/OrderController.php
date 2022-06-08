@@ -10,6 +10,15 @@ use Illuminate\Support\Facades\Validator;
 
 class OrderController extends Controller
 {
+    public function index()
+    {
+        # code...
+    }
+
+    public function show(Order $order)
+    {
+        # code...
+    }
     public function store(OrderCreateReq $request)
     {
         $data = $request->all();

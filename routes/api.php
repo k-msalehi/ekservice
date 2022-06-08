@@ -19,19 +19,22 @@ use Illuminate\Support\Facades\URL;
 
 Route::get('checkUser', function () {
     if (auth()->check())
-        return response()->json(['login' => true, 'userDate' => auth()->user()], 200);
-    else
-        return response()->json(['login' =>  false], 200);
+        return response()->json(['login' => true, 'sanctum' => false, 'userDate' => auth()->user()], 200);
+
+    if (auth('sanctum')->check())
+        return response()->json(['login' => true, 'sanctum' => true, 'userDate' => auth()->user()], 200);
+
+    return response()->json(['login' =>  false], 200);
 });
 Route::post('login', [AuthController::class, 'login'])->name('login');
 Route::post('checkLoginCode', [AuthController::class, 'checkLoginCode'])->name('checkLoginCode');
 
-Route::prefix('orders')->name('orders.')->group(function () {
+Route::middleware(['auth:sanctum'])->prefix('orders')->name('orders.')->group(function () {
     Route::get('/', [OrderController::class, 'index']);
-    Route::get('{id}', [OrderController::class, 'show']);
+    Route::get('{order}', [OrderController::class, 'show']);
     Route::post('/', [OrderController::class, 'store']);
-    Route::post('{id}/update', [OrderController::class, 'update']);
-    Route::post('{id}/delete', [OrderController::class, 'delete']);
+    // Route::post('{id}/update', [OrderController::class, 'update']);
+    // Route::post('{id}/delete', [OrderController::class, 'delete']);
 });
 
 Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
