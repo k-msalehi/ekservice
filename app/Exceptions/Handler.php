@@ -67,7 +67,7 @@ class Handler extends ExceptionHandler
             }
 
             if ($exception instanceof AccessDeniedException) {
-                return app('res')->error('is Unauthorized.', [], 403);
+                return app('res')->error('Unauthorized.', [], 403);
             }
         }
 
