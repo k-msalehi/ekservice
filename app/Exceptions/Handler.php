@@ -3,6 +3,7 @@
 namespace App\Exceptions;
 
 use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\Auth\AuthenticationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Http\JsonResponse;
@@ -54,13 +55,23 @@ class Handler extends ExceptionHandler
 
     public function render($request, Throwable $exception)
     {
-        if ($request->expectsJson())
+        if ($request->expectsJson()) {
             if ($exception instanceof ModelNotFoundException)
                 return app('res')->error('object not found', [], 404);
 
-        if ($exception instanceof AuthorizationException) {
-            return app('res')->error('This action is unauthorized.', [], 401);
+            if ($exception instanceof AuthorizationException) {
+                return app('res')->error('unauthorized.', [], 401);
+            }
+            if ($exception instanceof AuthenticationException) {
+                return app('res')->error('Unauthenticated.', [], 401);
+            }
+
+            if ($exception instanceof AccessDeniedException) {
+                return app('res')->error('is Unauthorized.', [], 403);
+            }
         }
+
+
         return parent::render($request, $exception);
     }
 }
