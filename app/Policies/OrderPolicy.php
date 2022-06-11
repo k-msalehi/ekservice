@@ -18,7 +18,7 @@ class OrderPolicy
      */
     public function viewAny(User $user)
     {
-        //
+        return auth('sanctum')->check();
     }
 
     /**
@@ -43,7 +43,7 @@ class OrderPolicy
      */
     public function create(User $user)
     {
-        //
+        return auth('sanctum')->check();
     }
 
     /**

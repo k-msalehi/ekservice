@@ -2,9 +2,11 @@
 
 namespace App\Exceptions;
 
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Http\JsonResponse;
+use Symfony\Component\HttpFoundation\File\Exception\AccessDeniedException;
 use Throwable;
 
 class Handler extends ExceptionHandler
@@ -55,6 +57,10 @@ class Handler extends ExceptionHandler
         if ($request->expectsJson())
             if ($exception instanceof ModelNotFoundException)
                 return app('res')->error('object not found', [], 404);
+
+        if ($exception instanceof AuthorizationException) {
+            return app('res')->error('This action is unauthorized.', [], 401);
+        }
         return parent::render($request, $exception);
     }
 }

@@ -167,13 +167,34 @@ Output on failure example:
 }
 ```
 
-Get all single orders
+Get all orders
 `Get /orders`
 
 Output on success example:
 ```
 {
     "data": [
+        {
+            "id": 1003,
+            "device_brand": "samsung",
+            "device_type": "mobile",
+            "device_model": "a33",
+            "name": "\u0645\u062d\u0645\u062f \u0635\u0627\u0644\u062d\u06cc",
+            "email": null,
+            "city_id": "301",
+            "address": "\u062e \u0645\u0648\u0644\u0648\u06cc \u062e \u062d\u062c\u062a",
+            "national_id": "4990139593",
+            "lon": "456",
+            "lat": "123",
+            "user_note": "\u062e\u0631\u0627\u0628 \u0647\u0633\u062a",
+            "admin_note": null,
+            "rough_price": null,
+            "requested_price": null,
+            "paid_price": null,
+            "final_price": null,
+            "status": 1,
+            "created_at": "2022-06-11T07:32:40.000000Z"
+        },
         {
             "id": 1002,
             "device_brand": "samsung",
@@ -216,6 +237,38 @@ Output on success example:
             "status": 1,
             "created_at": "2022-06-08T12:53:10.000000Z"
         }
-    ]
+    ],
+    "links": {
+        "first": "http:\/\/localhost:8000\/api\/orders?page=1",
+        "last": "http:\/\/localhost:8000\/api\/orders?page=1",
+        "prev": null,
+        "next": null
+    },
+    "meta": {
+        "current_page": 1,
+        "from": 1,
+        "last_page": 1,
+        "links": [
+            {
+                "url": null,
+                "label": "&laquo; \u0642\u0628\u0644\u06cc",
+                "active": false
+            },
+            {
+                "url": "http:\/\/localhost:8000\/api\/orders?page=1",
+                "label": "1",
+                "active": true
+            },
+            {
+                "url": null,
+                "label": "\u0628\u0639\u062f\u06cc &raquo;",
+                "active": false
+            }
+        ],
+        "path": "http:\/\/localhost:8000\/api\/orders",
+        "per_page": 30,
+        "to": 3,
+        "total": 3
+    }
 }
 ```

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\OrderController;
+use App\Models\Order;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\URL;
@@ -16,6 +17,7 @@ use Illuminate\Support\Facades\URL;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+
 Route::get('checkUser', function () {
     if (auth()->check())
         return response()->json(['login' => true, 'sanctum' => false, 'userDate' => auth()->user()], 200);
@@ -25,13 +27,17 @@ Route::get('checkUser', function () {
 
     return response()->json(['login' =>  false], 200);
 });
+
+Route::get('login', function () {
+    return app('res')->error('send Login data using POST request.');
+});
 Route::post('login', [AuthController::class, 'login'])->name('login');
 Route::post('checkLoginCode', [AuthController::class, 'checkLoginCode'])->name('checkLoginCode');
 
 Route::middleware(['auth:sanctum'])->prefix('orders')->name('orders.')->group(function () {
-    Route::get('/', [OrderController::class, 'index']);
+    Route::get('/', [OrderController::class, 'index'])->can('viewAny', Order::class);
     Route::get('{order}', [OrderController::class, 'show'])->middleware(['can:view,order']);
-    Route::post('/', [OrderController::class, 'store']);
+    Route::post('/', [OrderController::class, 'store'])->can('create', Order::class);
     // Route::post('{id}/update', [OrderController::class, 'update']);
     // Route::post('{id}/delete', [OrderController::class, 'delete']);
 });
