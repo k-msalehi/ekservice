@@ -28,8 +28,9 @@ class OrderController extends Controller
     }
     public function store(OrderCreateReq $request)
     {
-        $data = $request->all();
+        $data = $request->validated();
         $data['user_id'] = auth()->user()->id;
+        $data['status'] = config('constants.order.status.submited');
         if ($order = Order::create($data))
             return app('res')->success(new OrderResource($order));
         else

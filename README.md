@@ -104,21 +104,26 @@ Output on success example:
     "success": true,
     "message": "success",
     "data": {
-        "device_type": "mobile",
+        "id": 1013,
         "device_brand": "samsung",
+        "device_type": "mobile",
         "device_model": "a33",
-        "user_note": "\u062e\u0631\u0627\u0628 \u0647\u0633\u062a",
         "name": "\u0645\u062d\u0645\u062f \u0635\u0627\u0644\u062d\u06cc",
-        "national_id": "4990139593",
-        "province_id": 8,
+        "email": null,
         "city_id": "301",
         "address": "\u062e \u0645\u0648\u0644\u0648\u06cc \u062e \u062d\u062c\u062a",
-        "lat": "123",
+        "national_id": "4990139593",
         "lon": "456",
-        "user_id": 1,
-        "updated_at": "2022-06-08T06:22:32.000000Z",
-        "created_at": "2022-06-08T06:22:32.000000Z",
-        "id": 4
+        "lat": "123",
+        "user_note": "\u062e\u0631\u0627\u0628 \u0647\u0633\u062a",
+        "admin_note": null,
+        "rough_price": null,
+        "requested_price": null,
+        "paid_price": null,
+        "final_price": null,
+        "status": 1,
+        "status_text": "\u062b\u0628\u062a \u0627\u0648\u0644\u06cc\u0647",
+        "created_at": "2022-06-11T10:57:02.000000Z"
     }
 }
 ```
@@ -156,7 +161,8 @@ Output on success example:
         "paid_price": null,
         "final_price": null,
         "status": 1,
-        "created_at": "2022-06-08T12:53:10.000000Z"
+        "status_text": "\u062b\u0628\u062a \u0627\u0648\u0644\u06cc\u0647",
+        "created_at": "2022-06-11T10:28:24.000000Z"
     }
 }
 ```

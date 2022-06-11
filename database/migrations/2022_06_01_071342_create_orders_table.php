@@ -33,7 +33,7 @@ return new class extends Migration
             $table->unsignedInteger('requested_price')->nullable()->default(null);
             $table->unsignedInteger('paid_price')->nullable()->default(null);
             $table->unsignedInteger('final_price')->nullable()->default(null);
-            $table->tinyInteger('status')->default();
+            $table->tinyInteger('status')->default(config('constants.order.status.submited'));
             $table->string('delivery_code')->nullable()->default(null);
             $table->timestamps();
         });

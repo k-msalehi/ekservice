@@ -44,12 +44,12 @@ class AuthController extends Controller
         if (!$sms->sendOtp($data['tel'], $token)) {
             return redirect(route('login'))->withErrors(['tel' => 'مشکلی در ارسال پیامک پیش آمده، لطفا چند دقیقه‌ی دیگر مجددا امتحان کنید.']);
         }
-        $hash = hash('md5', Str::random(12));
-        $user->hash = $hash;
+        $hash = Str::random(18);
+        $user->hash = hash('md5', $hash);
         $user->otp = bcrypt($token);
         $user->otp_expire = time() + config('constants.sms.otpLifeTime');
         $user->save();
-        return app('res')->success(['hash' => $hash]);
+        return app('res')->success(['hash' =>   $hash]);
     }
 
     /**
@@ -73,7 +73,7 @@ class AuthController extends Controller
 
         $user = User::where('tel', $data['tel'])->firstOrFail();
 
-        if ($user->hash != $data['hash']) {
+        if ($user->hash !=  hash('md5', $data['hash'])) {
             return app('res')->error('کد اعتبارسنجی/هش اشتباه است.');
         }
 
