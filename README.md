@@ -157,7 +157,7 @@ Output on success example:
         "created_at": "2022-06-08T12:53:10.000000Z"
     }
 }
----
+```
 
 Output on failure example:
 ```
