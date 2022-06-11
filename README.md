@@ -124,3 +124,36 @@ Output on success example:
 ```
 
 ---
+
+**Get Order(s)**
+
+`Get /orders/{order-id}`
+
+Output on success example:
+```
+{
+    "success": true,
+    "message": "success",
+    "data": {
+        "id": 1001,
+        "device_brand": "samsung",
+        "device_type": "mobile",
+        "device_model": "a33",
+        "name": "\u0645\u062d\u0645\u062f \u0635\u0627\u0644\u062d\u06cc",
+        "email": null,
+        "city_id": "301",
+        "address": "\u062e \u0645\u0648\u0644\u0648\u06cc \u062e \u062d\u062c\u062a",
+        "national_id": "4990139593",
+        "lon": "456",
+        "lat": "123",
+        "user_note": "\u062e\u0631\u0627\u0628 \u0647\u0633\u062a",
+        "admin_note": null,
+        "rough_price": null,
+        "requested_price": null,
+        "paid_price": null,
+        "final_price": null,
+        "status": 1,
+        "created_at": "2022-06-08T12:53:10.000000Z"
+    }
+}
+---

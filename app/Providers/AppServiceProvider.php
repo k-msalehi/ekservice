@@ -21,7 +21,7 @@ class AppServiceProvider extends ServiceProvider
         });
 
         $this->app->bind(Sms::class, function () {
-            return new LogSms();
+            return new Kavenegar();
         });
     }
 

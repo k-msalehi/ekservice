@@ -28,15 +28,16 @@ class Kavenegar implements SmsInterface
             $this->sms->type = 'otp';
             $this->sms->created_at = time();
 
-            $res = Http::timeout(6)->get("https://api.kavenegar.com/v1/{$this->apiKey}/lookup.json", [
+            $res = Http::timeout(6)->get("https://api.kavenegar.com/v1/{$this->apiKey}/verify/lookup.json", [
                   'receptor' =>  $to,
                   'token' => $code,
+                  'template' => 'servicekala-auth',
             ]);
             if ($res->successful()) {
                   return true;
             } else {
                   $body = $res->body();
-                  Log::channel('sms')->warning("SMS not send. provider:{$this->smsProvider}, tel:{$this->tel}, code:{$code}, timestamp: " . time() . ", response: {$body}");
+                  Log::channel('sms')->warning("SMS not send. provider:Kavenegar, tel:{$to}, code:{$code}, timestamp: " . time() . ", response: {$body}");
                   return false;
             }
             return false;
