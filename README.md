@@ -170,7 +170,7 @@ Output on failure example:
 ```
 
 Get all orders
-`Get /orders` Or ``Get /admin/orders`'
+`Get /orders` Or `Get /admin/orders`
 
 Output on success example:
 ```
