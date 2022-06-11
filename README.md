@@ -173,6 +173,8 @@ Get all orders
 Output on success example:
 ```
 {
+    "success": true,
+    "message": "Orders fetched successfully.",
     "data": [
         {
             "id": 1003,
@@ -237,38 +239,6 @@ Output on success example:
             "status": 1,
             "created_at": "2022-06-08T12:53:10.000000Z"
         }
-    ],
-    "links": {
-        "first": "http:\/\/localhost:8000\/api\/orders?page=1",
-        "last": "http:\/\/localhost:8000\/api\/orders?page=1",
-        "prev": null,
-        "next": null
-    },
-    "meta": {
-        "current_page": 1,
-        "from": 1,
-        "last_page": 1,
-        "links": [
-            {
-                "url": null,
-                "label": "&laquo; \u0642\u0628\u0644\u06cc",
-                "active": false
-            },
-            {
-                "url": "http:\/\/localhost:8000\/api\/orders?page=1",
-                "label": "1",
-                "active": true
-            },
-            {
-                "url": null,
-                "label": "\u0628\u0639\u062f\u06cc &raquo;",
-                "active": false
-            }
-        ],
-        "path": "http:\/\/localhost:8000\/api\/orders",
-        "per_page": 30,
-        "to": 3,
-        "total": 3
-    }
+    ]
 }
 ```
