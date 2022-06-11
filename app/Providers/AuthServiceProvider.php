@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Models\Order;
+use App\Models\User;
 use App\Policies\OrderPolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
@@ -28,6 +29,8 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        //
+        Gate::define('view-adminpanel', function (User $user) {
+            return ($user->role == config('constants.roles.admin') || $user->role == config('constants.roles.expert'));
+        });
     }
 }

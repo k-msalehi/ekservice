@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\OrderController as AdminOrderController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\OrderController;
 use App\Models\Order;
@@ -33,6 +34,25 @@ Route::get('login', function () {
 });
 Route::post('login', [AuthController::class, 'login'])->name('login');
 Route::post('checkLoginCode', [AuthController::class, 'checkLoginCode'])->name('checkLoginCode');
+
+Route::prefix('admin')->name('admin.')->middleware(['auth:sanctum','can:view-adminpanel'])->group(function () {
+    Route::prefix('orders')->name('orders.')->group(function () {
+        Route::get('/', [AdminOrderController::class, 'index']);
+        Route::get('{order}', [AdminOrderController::class, 'show']);
+        Route::post('/', [AdminOrderController::class, 'store']);
+        // Route::post('{id}/update', [OrderController::class, 'update']);
+        // Route::post('{id}/delete', [OrderController::class, 'delete']);
+    });
+});
+Route::middleware(['auth:sanctum'])->prefix('orders')->name('orders.')->group(function () {
+    Route::get('/', [OrderController::class, 'index'])->can('viewAny', Order::class);
+    Route::get('{order}', [OrderController::class, 'show'])->middleware(['can:view,order']);
+    Route::post('/', [OrderController::class, 'store'])->can('create', Order::class);
+    // Route::post('{id}/update', [OrderController::class, 'update']);
+    // Route::post('{id}/delete', [OrderController::class, 'delete']);
+});
+
+
 
 Route::middleware(['auth:sanctum'])->prefix('orders')->name('orders.')->group(function () {
     Route::get('/', [OrderController::class, 'index'])->can('viewAny', Order::class);

@@ -127,8 +127,10 @@ Output on success example:
 
 **Get Order(s)**
 
+*note: `/admin` prefix requires admin role*
+
 Get a single order
-`Get /orders/{order-id}`
+`Get /orders/{order-id}` Or `Get /admin/orders/{order-id}`
 
 Output on success example:
 ```
@@ -168,7 +170,7 @@ Output on failure example:
 ```
 
 Get all orders
-`Get /orders`
+`Get /orders` Or ``Get /admin/orders`'
 
 Output on success example:
 ```
