@@ -9,13 +9,8 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Http\JsonResponse;
 
-class OrderCreateReq extends FormRequest
+class OrderUpdateReq extends FormRequest
 {
-    // protected function failedValidation(Validator $validator)
-    // {
-    //     // throw new HttpResponseException(response()->json(['errors' => $validator->errors()], 422));
-    //     throw new HttpResponseException(app('res')->error('validation error', $validator->errors()));
-    // }
     /**
      * Determine if the user is authorized to make this request.
      *

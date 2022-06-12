@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\OrderCreateReq;
+use App\Http\Requests\OrderUpdateReq;
 use App\Http\Resources\OrderCollection;
 use App\Http\Resources\OrderResource;
 use App\Models\Order;
@@ -32,5 +33,14 @@ class OrderController extends Controller
             return app('res')->success(new OrderResource($order));
         else
             return app('res')->error('error while saving order');
+    }
+
+    public function update(OrderUpdateReq $order, Request $request)
+    {
+        $data = $request->validated();
+        if ($order->update($data))
+            return app('res')->success(new OrderResource($order));
+        else
+            return app('res')->error('error while updating order');
     }
 }
