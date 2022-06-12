@@ -13,9 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('ordermetas', function (Blueprint $table) {
+        Schema::create('order_metas', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('order_id')->constrained();
+            $table->foreignId('order_id')->constrained('orders');
+            $table->foreignId('user_id')->constrained('users');
             $table->string('name');
             $table->string('value');
             $table->timestamps();

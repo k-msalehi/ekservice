@@ -47,4 +47,9 @@ class Order extends Model
                 return 'نامشخص';
         }
     }
+
+    public function meta()
+    {
+        return $this->hasMany(OrderMeta::class, 'order_id', 'id');
+    }
 }

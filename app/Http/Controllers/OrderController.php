@@ -17,7 +17,7 @@ class OrderController extends Controller
         $perPage = request()->get('perPage', 30);
         // return OrderResource::collection(Order::where('user_id', auth()->user()->id)->orderBy('id', 'DESC')->paginate(30));
         return  app('res')->success(
-            new OrderCollection(Order::where('user_id', auth()->user()->id)->orderBy('id', 'DESC')->paginate($perPage)),
+            new OrderCollection(Order::where('user_id', auth('sanctum')->user()->id)->orderBy('id', 'DESC')->paginate($perPage)),
             'Orders fetched successfully.'
         );
     }
@@ -29,7 +29,7 @@ class OrderController extends Controller
     public function store(OrderCreateReq $request)
     {
         $data = $request->validated();
-        $data['user_id'] = auth()->user()->id;
+        $data['user_id'] = auth('sanctum')->user()->id;
         $data['status'] = config('constants.order.status.submited');
         if ($order = Order::create($data))
             return app('res')->success(new OrderResource($order));

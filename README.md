@@ -1,4 +1,5 @@
 * Set header "Accept: application/json" for all requests.
+* `/admin` prefix requires admin role
 
 ## Endpoints
 
@@ -132,9 +133,7 @@ Output on success example:
 
 ---
 
-**Get Order(s)**
-
-*note: `/admin` prefix requires admin role*
+**Get an Order or list of orders**
 
 Get a single order
 `Get /orders/{order-id}` Or `Get /admin/orders/{order-id}`
@@ -275,4 +274,122 @@ Order Statuses
     'canceledByHead' => '15',
 ],
 
+```
+
+**Create new user**
+
+`POST /admin/users`
+
+Inputs:
+```
+tel
+role
+````
+
+Output on success example:
+```
+{
+    "success": true,
+    "message": "User created successfully.",
+    "data": {
+        "tel": "09000000000",
+        "role": "1",
+        "updated_at": "2022-06-12T11:22:58.000000Z",
+        "created_at": "2022-06-12T11:22:58.000000Z",
+        "id": 6
+    }
+}
+```
+---
+
+**Get a  user or list of users**
+
+get list of users `GET admin/users`
+
+Example output:
+```
+{
+    "success": true,
+    "message": "Users fetched successfully.",
+    "data": {
+        "current_page": 1,
+        "data": [
+            {
+                "id": 5,
+                "name": null,
+                "tel": "09116656568",
+                "national_id": null,
+                "email": null,
+                "email_verified_at": null,
+                "role": 1,
+                "status": 1,
+                "created_at": "2022-06-12T11:18:59.000000Z",
+                "updated_at": "2022-06-12T11:18:59.000000Z"
+            },
+            {
+                "id": 4,
+                "name": null,
+                "tel": "09116656567",
+                "national_id": null,
+                "email": null,
+                "email_verified_at": null,
+                "role": 3,
+                "status": 1,
+                "created_at": "2022-06-12T11:18:30.000000Z",
+                "updated_at": "2022-06-12T11:18:30.000000Z"
+            },
+            {
+                "id": 3,
+                "name": "note",
+                "tel": "09116656566",
+                "national_id": null,
+                "email": null,
+                "email_verified_at": null,
+                "role": 3,
+                "status": 1,
+                "created_at": "2022-06-12T11:17:34.000000Z",
+                "updated_at": "2022-06-12T11:17:34.000000Z"
+            },
+            {
+                "id": 1,
+                "name": null,
+                "tel": "9116659582",
+                "national_id": null,
+                "email": null,
+                "email_verified_at": null,
+                "role": 1,
+                "status": 1,
+                "created_at": "2022-06-12T09:03:27.000000Z",
+                "updated_at": "2022-06-12T09:06:19.000000Z"
+            }
+        ],
+        "first_page_url": "http:\/\/localhost:8000\/api\/admin\/users?page=1",
+        "from": 1,
+        "last_page": 1,
+        "last_page_url": "http:\/\/localhost:8000\/api\/admin\/users?page=1",
+        "links": [
+            {
+                "url": null,
+                "label": "&laquo; \u0642\u0628\u0644\u06cc",
+                "active": false
+            },
+            {
+                "url": "http:\/\/localhost:8000\/api\/admin\/users?page=1",
+                "label": "1",
+                "active": true
+            },
+            {
+                "url": null,
+                "label": "\u0628\u0639\u062f\u06cc &raquo;",
+                "active": false
+            }
+        ],
+        "next_page_url": null,
+        "path": "http:\/\/localhost:8000\/api\/admin\/users",
+        "per_page": 30,
+        "prev_page_url": null,
+        "to": 6,
+        "total": 6
+    }
+}
 ```

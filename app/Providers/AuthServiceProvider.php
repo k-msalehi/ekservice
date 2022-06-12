@@ -29,8 +29,11 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        Gate::define('view-adminpanel', function (User $user) {
+        Gate::define('viewAdminPanel', function (User $user) {
             return ($user->role == config('constants.roles.admin') || $user->role == config('constants.roles.expert'));
+        });
+        Gate::define('manageUsers', function (User $user) {
+            return ($user->role == config('constants.roles.admin'));
         });
     }
 }
