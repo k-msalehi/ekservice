@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UserCreateReq;
+use App\Http\Requests\UserUpdateReq;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -31,8 +32,20 @@ class UserController extends Controller
         return app('res')->error('error while saving user');
     }
 
-    public function update(Request $request, User $user)
+    public function update(UserUpdateReq $request, User $user)
     {
-        # code...
+
+        $data = $request->validated();
+        $user->name = $data['name'] ?? $user->name;
+        $user->email = $data['email'] ?? $user->email;
+        $user->tel = $data['tel'] ?? $user->tel;
+        $user->role = $data['role'] ?? $user->role;
+        // $data['password'] ??= null;
+        // if ($data['password'])
+        //     $user->password = bcrypt($data['password']);
+        dd($user,$user->save());
+        if ($user->save())
+            return app('res')->success($user, 'User updated successfully.');
+        return app('res')->error('error while updating user');
     }
 }

@@ -4,6 +4,8 @@ namespace App\Http\Requests;
 
 use App\Rules\FaAlpha;
 use App\Rules\IrMobile;
+use App\Rules\NationalCode;
+use App\Services\Helpers\Helper;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
@@ -11,6 +13,13 @@ use Illuminate\Http\JsonResponse;
 
 class OrderCreateReq extends FormRequest
 {
+    protected function prepareForValidation()
+    {
+        $helper = new Helper;
+        $nationalId = $helper->faToEnNum($this->national_id);
+        $this->merge(['national_id' => $nationalId]);
+    }
+
     // protected function failedValidation(Validator $validator)
     // {
     //     // throw new HttpResponseException(response()->json(['errors' => $validator->errors()], 422));
@@ -40,7 +49,7 @@ class OrderCreateReq extends FormRequest
             'device_model' => ['required', 'string', 'max:32', 'min:2'],
             'user_note' =>  ['required', 'string', 'max:512', 'min:3'],
             'name' => ['required', 'string', 'max:64', 'min:3', new FaAlpha],
-            'national_id' => ['required', 'string', 'max:64', 'min:3'],
+            'national_id' => ['required', new NationalCode],
             'province_id' => ['required', 'exists:provinces,id'],
             'city_id' => ['required', 'exists:cities,id'],
             'address' => ['required', 'string', 'max:128', 'min:3'],

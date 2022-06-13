@@ -133,4 +133,7 @@ return [
             'rule-name' => 'custom-message',
         ],
     ],
+    'attributes'           => [
+        'national_id' =>'کد ملی',
+    ],
 ];
