@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\Request;
 
 class Order extends Model
 {
@@ -51,5 +52,28 @@ class Order extends Model
     public function meta()
     {
         return $this->hasMany(OrderMeta::class, 'order_id', 'id');
+    }
+
+    public function scopeFilter($query, $data)
+    {
+        if (isset($data['id'])) {
+            $query->where('id', $data['id']);
+            return $query;
+        }
+        if (isset($data['status'])) {
+            $query->where('status', $data['status']);
+        }
+        if (isset($data['device_type'])) {
+            $query->where('device_type', $data['device_type']);
+        }
+        if (isset($data['device_brand'])) {
+            $query->where('device_brand', $data['device_brand']);
+        }
+
+        if (isset($data['user_id'])) {
+            $query->where('user_id', $data['user_id']);
+        }
+
+        return $query;
     }
 }

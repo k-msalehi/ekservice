@@ -14,11 +14,11 @@ use Illuminate\Http\Request;
 
 class OrderController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $perPage = request()->get('perPage', 30);
+        $perPage = $request->get('perPage', 30);
         return  app('res')->success(
-            new OrderCollection(Order::orderBy('id', 'DESC')->paginate($perPage)),
+            new OrderCollection(Order::filter(request()->all())->orderBy('id', 'DESC')->paginate($perPage)),
             'Orders fetched successfully.'
         );
     }
