@@ -6,6 +6,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\OrderController;
 use App\Models\Order;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\URL;
 
@@ -30,6 +31,15 @@ Route::get('checkUser', function () {
 Route::get('login', function () {
     return app('res')->error('send Login data using POST method.');
 });
+Route::any('logout', function (Request $request) {
+    dd(Auth::getDefaultDriver(),auth('sanctum')->check(),auth('web')->check());
+    auth('web')->logout();
+    $request->session()->invalidate();
+    $request->session()->regenerateToken();
+    $user = auth('sanctum')->user();
+    $user->tokens()->delete();
+    return app('res')->success('logout success');
+})->middleware('auth:sanctum');
 
 Route::post('login', [AuthController::class, 'login'])->name('login');
 Route::post('checkLoginCode', [AuthController::class, 'checkLoginCode'])->name('checkLoginCode');

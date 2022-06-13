@@ -4,7 +4,7 @@
 ## Endpoints
 
 
-**Login/Register**
+**Login/Logout/Register**
 
 `POST /login`
 
@@ -80,6 +80,16 @@ Response example:
 {"login":false}
 ```
 
+`POST /logout`
+
+Output on success
+```
+{
+    "success": true,
+    "message": "success",
+    "data": "logout success"
+}
+```
 ---
 
 **Submit new order**
@@ -251,10 +261,8 @@ Output on success example:
     ]
 }
 ```
-
 ---
-
-Order Statuses
+*Order Statuses*
 ```
 'status' => [
     'submited' => 1,
@@ -275,6 +283,34 @@ Order Statuses
 ],
 
 ```
+---
+**Modify an order(s)**
+
+add new note to order `POST /admin/orders/{order-id}/note`
+
+inputs:
+```
+value
+```
+
+Response on success:
+```
+{
+    "success": true,
+    "message": "Note added successfully.",
+    "data": {
+        "order_id": 1001,
+        "user_id": 1,
+        "name": "note",
+        "value": "\u062e\u0631\u0627\u0628 \u0647\u0633\u062a",
+        "updated_at": "2022-06-13T06:54:28.000000Z",
+        "created_at": "2022-06-13T06:54:28.000000Z",
+        "id": 8
+    }
+}
+```
+
+---
 
 **Create new user**
 
