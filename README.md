@@ -189,7 +189,7 @@ Output on failure example:
 Get all orders
 `Get /orders` Or `Get /admin/orders`
 
-* You can filter request by `status`, `device_type`, `device_brand`, `user_id` in query parameter.
+* You can filter orders by `status`, `device_type`, `device_brand` and `user_id` in query parameter.
 * if `id` parametere exists in url, only order with that id returns as response.
 
 Output on success example:

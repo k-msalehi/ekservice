@@ -52,7 +52,7 @@ class OrderCreateReq extends FormRequest
             'national_id' => ['required', new NationalCode],
             'province_id' => ['required', 'exists:provinces,id'],
             'city_id' => ['required', 'exists:cities,id'],
-            'address' => ['required', 'string', 'max:128', 'min:3'],
+            'address' => ['required', 'string', 'max:255', 'min:3'],
             'lat' => ['nullable', 'numeric'],
             'lon' => ['nullable', 'numeric'],
         ];

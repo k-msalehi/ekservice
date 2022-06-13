@@ -33,7 +33,7 @@ class OrderUpdateReq extends FormRequest
             'admin_note' =>  ['nullable', 'string', 'max:512', 'min:3'],
             'name' => ['nullable', 'string', 'max:64', 'min:3', new FaAlpha],
             'status' => ['nullable', Rule::in(config('constants.order.status'))],
-            'address' => ['nullable', 'string', 'max:128', 'min:3'],
+            'address' => ['nullable', 'string', 'max:255', 'min:3'],
             'rough_price' => ['nullable', 'numeric'],
             'requested_price' => ['nullable', 'numeric'],
             'final_price' => ['nullable', 'numeric'],

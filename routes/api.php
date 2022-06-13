@@ -21,6 +21,7 @@ use Illuminate\Support\Facades\URL;
 |
 */
 
+
 Route::get('checkUser', function () {
     if (auth('sanctum')->check())
         return response()->json(['login' => true, 'userDate' => auth('sanctum')->user()], 200);
