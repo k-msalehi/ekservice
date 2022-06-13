@@ -286,6 +286,24 @@ Output on success example:
 ---
 **Modify/Manage an order(s)**
 
+update an order `POST /admin/orders/{order-id}/update` 
+
+inputs *(all inputs are optional)*:
+```
+name
+address
+rough_price
+requested_price
+final_price
+admin_note
+status    
+device_type
+device_brand
+device_model
+lat
+lon
+```
+
 add new note to order `POST /admin/orders/{order-id}/note`
 
 inputs:
