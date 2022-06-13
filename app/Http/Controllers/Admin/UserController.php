@@ -40,10 +40,6 @@ class UserController extends Controller
         $user->email = $data['email'] ?? $user->email;
         $user->tel = $data['tel'] ?? $user->tel;
         $user->role = $data['role'] ?? $user->role;
-        // $data['password'] ??= null;
-        // if ($data['password'])
-        //     $user->password = bcrypt($data['password']);
-        dd($user,$user->save());
         if ($user->save())
             return app('res')->success($user, 'User updated successfully.');
         return app('res')->error('error while updating user');

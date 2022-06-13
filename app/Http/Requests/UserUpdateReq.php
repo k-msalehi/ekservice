@@ -3,11 +3,18 @@
 namespace App\Http\Requests;
 
 use App\Rules\IrMobile;
+use App\Services\Helpers\Helper;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
 class UserUpdateReq extends FormRequest
 {
+    protected function prepareForValidation()
+    {
+        $helper = new Helper;
+        $tel = $helper->faToEnNum($this->tel);
+        $this->merge(['tel' => $tel]);
+    }
     /**
      * Determine if the user is authorized to make this request.
      *
