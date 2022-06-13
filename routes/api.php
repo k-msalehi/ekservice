@@ -31,6 +31,7 @@ Route::get('checkUser', function () {
 Route::get('login', function () {
     return app('res')->error('send Login data using POST method.');
 });
+
 Route::any('logout', function (Request $request) {
     dd(Auth::getDefaultDriver(),auth('sanctum')->check(),auth('web')->check());
     auth('web')->logout();
@@ -60,9 +61,10 @@ Route::prefix('admin')->name('admin.')->middleware(['auth:sanctum', 'can:viewAdm
         Route::get('/', [AdminUserController::class, 'index']);
         Route::get('{user}', [AdminUserController::class, 'show']);
         Route::post('/', [AdminUserController::class, 'store'])->middleware(['can:manageUsers']);
-        Route::post('{user}/update', [AdminUserController::class, 'update']);
+        Route::post('{user}/update', [AdminUserController::class, 'update'])->middleware(['can:manageUsers']);
     });
 });
+
 Route::middleware(['auth:sanctum'])->prefix('orders')->name('orders.')->group(function () {
     Route::get('/', [OrderController::class, 'index'])->can('viewAny', Order::class);
     Route::get('{order}', [OrderController::class, 'show'])->middleware(['can:view,order']);

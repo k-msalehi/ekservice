@@ -30,5 +30,9 @@ class UserController extends Controller
             return app('res')->success($user, 'User created successfully.');
         return app('res')->error('error while saving user');
     }
-      
+
+    public function update(Request $request, User $user)
+    {
+        # code...
+    }
 }
