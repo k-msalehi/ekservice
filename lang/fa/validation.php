@@ -134,6 +134,15 @@ return [
         ],
     ],
     'attributes'           => [
-        'national_id' =>'کد ملی',
+        'national_id' => 'کد ملی',
+        'user_note' => 'ایراد دستگاه',
+        'tel' => 'شماره تلفن',
+        'device_brand' => 'برند دستگاه',
+        'device_model' => 'مدل دستگاه',
+        'device_type' => 'مدل دستگاه',
+        'name' => 'مدل دستگاه',
+        'name' => 'مدل دستگاه',
+        'address' => 'آدرس',
+
     ],
 ];
