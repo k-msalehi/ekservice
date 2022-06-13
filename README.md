@@ -284,7 +284,7 @@ Output on success example:
 
 ```
 ---
-**Modify an order(s)**
+**Modify/Manage an order(s)**
 
 add new note to order `POST /admin/orders/{order-id}/note`
 
