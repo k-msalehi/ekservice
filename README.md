@@ -361,6 +361,29 @@ Output on success example:
 
 **Get a  user or list of users**
 
+Get a single user `GET admin/users/{user-id}`
+On success example output:
+
+```
+{
+    "success": true,
+    "message": "User fetched successfully.",
+    "data": {
+        "id": 2,
+        "name": "reza",
+        "tel": "09116656565",
+        "national_id": null,
+        "email": null,
+        "email_verified_at": null,
+        "role": 2,
+        "status": 1,
+        "created_at": "2022-06-12T11:13:34.000000Z",
+        "updated_at": "2022-06-13T08:21:05.000000Z"
+    }
+}
+```
+
+
 get list of users `GET admin/users`
 
 Example output:
