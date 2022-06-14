@@ -331,6 +331,8 @@ Response on success:
 }
 ```
 
+get notes of an order `GET /admin/orders/{order-id}/note`
+
 ---
 
 **Create new user**

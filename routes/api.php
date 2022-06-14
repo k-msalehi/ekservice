@@ -29,7 +29,7 @@ Route::get('pay',function(){
             // Store transactionId in database.
             // We need the transactionId to verify payment in the future.
         }
-    )->pay()->render();
+    )->pay()->toJson();
 });
 
 
@@ -81,8 +81,7 @@ Route::middleware(['auth:sanctum'])->prefix('orders')->name('orders.')->group(fu
     Route::get('/', [OrderController::class, 'index'])->can('viewAny', Order::class);
     Route::get('{order}', [OrderController::class, 'show'])->middleware(['can:view,order']);
     Route::post('/', [OrderController::class, 'store'])->can('create', Order::class);
-    // Route::post('{id}/update', [OrderController::class, 'update']);
-    // Route::post('{id}/delete', [OrderController::class, 'delete']);
+
 });
 
 
@@ -93,6 +92,8 @@ Route::middleware(['auth:sanctum'])->prefix('orders')->name('orders.')->group(fu
     Route::post('/', [OrderController::class, 'store'])->can('create', Order::class);
     // Route::post('{id}/update', [OrderController::class, 'update']);
     // Route::post('{id}/delete', [OrderController::class, 'delete']);
+
+    // Route::get('pay');
 });
 
 Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {

@@ -61,6 +61,8 @@ return [
             'description' => 'payment using asanpardakht',
         ],
         'behpardakht' => [
+            //https://bpm.shaparak.ir/pgwchannel/services/pgw?wsdl
+            //https://bpm.shaparak.ir/pgwchannel/startpay.mellat
             'apiPurchaseUrl' => 'https://banktest.ir/gateway/bpm.shaparak.ir/pgwchannel/services/pgw?wsdl',
             'apiPaymentUrl' => 'https://banktest.ir/gateway/pgw.bpm.bankmellat.ir/pgwchannel/startpay.mellat',
             'apiVerificationUrl' => 'https://banktest.ir/gateway/bpm.shaparak.ir/pgwchannel/services/pgw?wsdl',
