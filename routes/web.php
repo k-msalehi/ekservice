@@ -10,4 +10,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::post('ttttt', [AuthController::class, 'login'])->name('ttt3');
+Route::any('callback',function(){
+    echo 'ok';
+    dump(request()->all());
+});

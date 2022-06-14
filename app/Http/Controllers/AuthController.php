@@ -37,12 +37,12 @@ class AuthController extends Controller
             $user->save();
         } else {
             if ($user->status == 0)
-                return app('res')->error('حساب شما غیر فعال است.');
+                return app('res')->error('user disabled', ['error' => 'حساب کاربری شما غیر فعال شده است.']);
         }
 
         $token = rand(10000, 99999);
         if (!$sms->sendOtp($data['tel'], $token)) {
-            return redirect(route('login'))->withErrors(['tel' => 'مشکلی در ارسال پیامک پیش آمده، لطفا چند دقیقه‌ی دیگر مجددا امتحان کنید.']);
+            return app('res')->error('ratelimit', ['error' => 'لطفا چند دقیقه دیگر امتحان کنید..']);
         }
         $hash = Str::random(18);
         $user->hash = hash('md5', $hash);
@@ -74,11 +74,11 @@ class AuthController extends Controller
         $user = User::where('tel', $data['tel'])->firstOrFail();
 
         if ($user->hash !=  hash('md5', $data['hash'])) {
-            return app('res')->error('کد اعتبارسنجی/هش اشتباه است.');
+            return app('res')->error('wrong hash', ['error' => 'کد اعتبارسنجی/هش اشتباه است.']);
         }
 
         if ($user->otp_expire < time()) {
-            return app('res')->error('کد تایید منقضی شده است.');
+            return app('res')->error('exipred', ['error' => 'کد تایید منقضی شده است.']);
         }
         if (Hash::check($request->get('otp'), $user->otp)) {
             auth()->login($user, ($request->get('remember')));
@@ -86,7 +86,7 @@ class AuthController extends Controller
             $user->save();
             return app('res')->success(['apiToken' => $user->createToken('apiToken1')->plainTextToken, 'role' => $user->role]);
         } else {
-            return app('res')->error('کد تایید اشتباه است.');
+            return app('res')->error('wrong code', ['error' => 'کد تایید اشتباه است.']);
         }
     }
 }

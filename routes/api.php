@@ -9,7 +9,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\URL;
-
+use Shetabit\Multipay\Invoice;
+use Shetabit\Payment\Facade\Payment;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -20,6 +21,16 @@ use Illuminate\Support\Facades\URL;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+Route::get('pay',function(){
+    // phpinfo();exit();
+    return Payment::purchase(
+        (new Invoice)->amount(1000), 
+        function($driver, $transactionId) {
+            // Store transactionId in database.
+            // We need the transactionId to verify payment in the future.
+        }
+    )->pay()->render();
+});
 
 
 Route::get('checkUser', function () {
