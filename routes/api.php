@@ -21,11 +21,12 @@ use Shetabit\Payment\Facade\Payment;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-Route::get('pay',function(){
+
+Route::get('pay', function () {
     // phpinfo();exit();
     return Payment::purchase(
-        (new Invoice)->amount(1000), 
-        function($driver, $transactionId) {
+        (new Invoice)->amount(1000),
+        function ($driver, $transactionId) {
             // Store transactionId in database.
             // We need the transactionId to verify payment in the future.
         }
@@ -45,13 +46,21 @@ Route::get('login', function () {
 });
 
 Route::any('logout', function (Request $request) {
-    dd(Auth::getDefaultDriver(),auth('sanctum')->check(),auth('web')->check());
-    auth('web')->logout();
-    $request->session()->invalidate();
-    $request->session()->regenerateToken();
-    $user = auth('sanctum')->user();
-    $user->tokens()->delete();
-    return app('res')->success('logout success');
+    try {
+        if (auth('sanctum')->check()) {
+            $user = auth('sanctum')->user();
+            $user->tokens()->delete();
+            auth('web')->logout();
+            $request->session()->invalidate();
+            $request->session()->regenerateToken();
+
+            return app('res')->success('logout success');
+        } else {
+            return app('res')->error('not logged in',['message' =>'first try']);
+        }
+    } catch (\Throwable $th) {
+        return app('res')->success('logout success',['message' => $th->getMessage()]);
+    }
 })->middleware('auth:sanctum');
 
 Route::post('login', [AuthController::class, 'login'])->name('login');
@@ -81,7 +90,6 @@ Route::middleware(['auth:sanctum'])->prefix('orders')->name('orders.')->group(fu
     Route::get('/', [OrderController::class, 'index'])->can('viewAny', Order::class);
     Route::get('{order}', [OrderController::class, 'show'])->middleware(['can:view,order']);
     Route::post('/', [OrderController::class, 'store'])->can('create', Order::class);
-
 });
 
 

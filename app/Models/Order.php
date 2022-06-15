@@ -29,7 +29,7 @@ class Order extends Model
     public function getStatusTextAttribute()
     {
         switch ($this->status) {
-            case config('constants.order.status.submited'):
+            case config('constants.order.status.submitted'):
                 return 'ثبت اولیه';
             case config('constants.order.status.deliverySent1'):
                 return 'درحال دریافت کالا از مشتری';
@@ -43,6 +43,24 @@ class Order extends Model
                 return 'درحال عیب یابی';
             case config('constants.order.status.waitingForCustomerConfirm'):
                 return 'منتظر تایید مشتری';
+            case config('constants.order.status.fixing'):
+                return 'در حال تعمیر';
+            case config('constants.order.status.cannotFix'):
+                return 'غیرقابل تعمیر';
+            case config('constants.order.status.fixed'):
+                return 'تعمیر شده';
+            case config('constants.order.status.deliverySent2'):
+                return 'در حال تحویل کالا از مشتری';
+            case config('constants.order.status.completed'):
+                return 'تکمیل موفق';
+            case config('constants.order.status.autocanceled'):
+                return 'لغو خودکار';
+            case config('constants.order.status.cancelRequestByCustomer'):
+                return 'درخواست لغو از مشتری';
+            case config('constants.order.status.canceledByCustomer'):
+                return 'لغو توسط مشتری';
+            case config('constants.order.status.canceledByHead'):
+                return 'لغو توسط مرکز';
 
             default:
                 return 'نامشخص';

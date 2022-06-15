@@ -81,7 +81,7 @@ class AuthController extends Controller
             return app('res')->error('exipred', ['error' =>[ 'کد تایید منقضی شده است.']]);
         }
         if (Hash::check($request->get('otp'), $user->otp)) {
-            auth()->login($user, ($request->get('remember')));
+            auth()->login($user,true);
             $user->otp_expire = null;
             $user->save();
             return app('res')->success(['apiToken' => $user->createToken('apiToken1')->plainTextToken, 'role' => $user->role]);

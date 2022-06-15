@@ -30,7 +30,7 @@ class OrderController extends Controller
     {
         $data = $request->validated();
         $data['user_id'] = auth('sanctum')->user()->id;
-        $data['status'] = config('constants.order.status.submited');
+        $data['status'] = config('constants.order.status.submitted');
         if ($order = Order::create($data))
             return app('res')->success(new OrderResource($order));
         else

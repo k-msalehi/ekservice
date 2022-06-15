@@ -268,7 +268,7 @@ Output on success example:
 *Order Statuses*
 ```
 'status' => [
-    'submited' => 1,
+    'submitted' => 1,
     'deliverySent1' => 2,
     'pickedByDelivery1' => '3',
     'pickedByHead' => '4',
