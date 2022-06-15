@@ -30,7 +30,7 @@ Route::get('pay', function () {
             // Store transactionId in database.
             // We need the transactionId to verify payment in the future.
         }
-    )->pay()->toJson();
+    )->pay()->render();
 });
 
 
@@ -54,9 +54,9 @@ Route::any('logout', function (Request $request) {
             $request->session()->invalidate();
             $request->session()->regenerateToken();
 
-            return app('res')->success('logout success');
+            return app('res')->success('logout success',['message' =>'first try']);
         } else {
-            return app('res')->error('not logged in',['message' =>'first try']);
+            return app('res')->error('not logged in');
         }
     } catch (\Throwable $th) {
         return app('res')->success('logout success',['message' => $th->getMessage()]);

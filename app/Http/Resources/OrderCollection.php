@@ -14,12 +14,23 @@ class OrderCollection extends ResourceCollection
      */
     public function toArray($request)
     {
-        return parent::toArray($request);
-        // return [
-        //     'data' => $this->collection,
-        //     'links' => [
-        //         'self' => 'link-value',
-        //     ],
-        // ];
+        // return parent::toArray($request);
+        return [
+            'data' => $this->collection,
+            'transactions'=>[
+                
+            ],
+            'pagination' => [
+                'total' => $this->total(),
+                'count' => $this->count(),
+                'per_page' => $this->perPage(),
+                'current_page' => $this->currentPage(),
+                'total_pages' => $this->lastPage(),
+                'next' => $this->nextPageUrl(),
+                'prev' => $this->previousPageUrl(),
+                'per_page' => $this->perPage(),
+                'has_more' => $this->hasMorePages(),
+            ],
+        ];
     }
 }

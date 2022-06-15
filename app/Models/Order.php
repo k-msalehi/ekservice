@@ -26,6 +26,11 @@ class Order extends Model
         'lon',
     ];
 
+    public function payments()
+    {
+        return $this->hasMany(Payment::class, 'order_id', 'id');
+    }
+    
     public function getStatusTextAttribute()
     {
         switch ($this->status) {

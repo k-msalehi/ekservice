@@ -140,8 +140,7 @@ return [
         'device_brand' => 'برند دستگاه',
         'device_model' => 'مدل دستگاه',
         'device_type' => 'نوع دستگاه',
-        'name' => 'مدل دستگاه',
-        'name' => 'مدل دستگاه',
+        'name' => 'نام',
         'address' => 'آدرس',
 
     ],
