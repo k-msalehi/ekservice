@@ -18,9 +18,11 @@ return new class extends Migration
             $table->foreignId('order_id')->constrained('orders');
             $table->foreignId('user_id')->constrained('users');
             $table->unsignedInteger('amount');
-            $table->string('bank_ref_id'); // bank reference id for payment
-            $table->string('bank_sale_order_id'); // bank sale order id (for bank payment)
-            $table->string('bank_sale_refrence_id'); // bank sale reference id (transaction id)
+            $table->string('ref_id')->default(''); // bank reference id for payment
+            $table->string('bank_sale_order_id')->default('');; // bank sale order id (for bank payment)
+            $table->string('bank_sale_refrence_id')->default('');; // bank sale reference id (transaction id)
+            $table->unsignedTinyInteger('status')->default(config('constants.payment.status.pending'));
+            $table->string('note')->default('');
 
             $table->timestamps();
         });

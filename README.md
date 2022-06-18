@@ -151,14 +151,17 @@ Get a single order
 Output on success example:
 ```
 {
+{
+{
     "success": true,
     "message": "success",
     "data": {
         "id": 1001,
+        "user_id": 1,
         "device_brand": "samsung",
         "device_type": "mobile",
         "device_model": "a33",
-        "name": "\u0645\u062d\u0645\u062f \u0635\u0627\u0644\u062d\u06cc",
+        "name": "\u0645\u062d\u0645\u062f \u0645\u062d\u0645\u062f\u06cc",
         "email": null,
         "city_id": "301",
         "address": "\u062e \u0645\u0648\u0644\u0648\u06cc \u062e \u062d\u062c\u062a",
@@ -173,7 +176,21 @@ Output on success example:
         "final_price": null,
         "status": 1,
         "status_text": "\u062b\u0628\u062a \u0627\u0648\u0644\u06cc\u0647",
-        "created_at": "2022-06-11T10:28:24.000000Z"
+        "created_at": "2022-06-12T09:06:29.000000Z",
+        "payments": [
+            {
+                "id": 3,
+                "user_id": 1,
+                "amount": 25000,
+                "ref_id": "MWQ1M2M1ZWFKMZI5",
+                "bank_sale_order_id": "",
+                "bank_sale_refrence_id": "",
+                "status": 2,
+                "note": "", // ONLY for admin and expert role
+                "created_at": "2022-06-18T09:45:18.000000Z",
+                "updated_at": "2022-06-18T09:45:24.000000Z"
+            }
+        ]
     }
 }
 ```

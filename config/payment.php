@@ -69,7 +69,7 @@ return [
             'terminalId' => '2105',
             'username' => 'user2105',
             'password' => '34943751',
-            'callbackUrl' => env('APP_URL') . '/callback',
+            'callbackUrl' => env('APP_URL') . '/api/pay/check',
             'description' => 'payment using behpardakht',
         ],
         'digipay' => [

@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\OrderController as AdminOrderController;
 use App\Http\Controllers\Admin\UserController as AdminUserController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\PaymentController;
 use App\Models\Order;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -22,7 +23,7 @@ use Shetabit\Payment\Facade\Payment;
 |
 */
 
-Route::get('pay', function () {
+Route::get('test', function () {
     // phpinfo();exit();
     return Payment::purchase(
         (new Invoice)->amount(1000),
@@ -54,12 +55,12 @@ Route::any('logout', function (Request $request) {
             $request->session()->invalidate();
             $request->session()->regenerateToken();
 
-            return app('res')->success('logout success',['message' =>'first try']);
+            return app('res')->success('logout success', ['message' => 'first try']);
         } else {
             return app('res')->error('not logged in');
         }
     } catch (\Throwable $th) {
-        return app('res')->success('logout success',['message' => $th->getMessage()]);
+        return app('res')->success('logout success', ['message' => $th->getMessage()]);
     }
 })->middleware('auth:sanctum');
 
@@ -86,23 +87,27 @@ Route::prefix('admin')->name('admin.')->middleware(['auth:sanctum', 'can:viewAdm
     });
 });
 
-Route::middleware(['auth:sanctum'])->prefix('orders')->name('orders.')->group(function () {
-    Route::get('/', [OrderController::class, 'index'])->can('viewAny', Order::class);
-    Route::get('{order}', [OrderController::class, 'show'])->middleware(['can:view,order']);
-    Route::post('/', [OrderController::class, 'store'])->can('create', Order::class);
+Route::middleware(['auth:sanctum'])->group(function () {
+    Route::prefix('orders')->name('orders.')->group(function () {
+        Route::get('/', [OrderController::class, 'index'])->can('viewAny', Order::class);
+        Route::get('{order}', [OrderController::class, 'show'])->middleware(['can:view,order']);
+        Route::post('/', [OrderController::class, 'store'])->can('create', Order::class);
+    });
+    
+    Route::post('pay/order/{order}', [PaymentController::class, 'pay']);
+    Route::post('pay/check', [PaymentController::class, 'check']);
 });
 
 
+// Route::middleware(['auth:sanctum'])->prefix('orders')->name('orders.')->group(function () {
+//     Route::get('/', [OrderController::class, 'index'])->can('viewAny', Order::class);
+//     Route::get('{order}', [OrderController::class, 'show'])->middleware(['can:view,order']);
+//     Route::post('/', [OrderController::class, 'store'])->can('create', Order::class);
+//     // Route::post('{id}/update', [OrderController::class, 'update']);
+//     // Route::post('{id}/delete', [OrderController::class, 'delete']);
 
-Route::middleware(['auth:sanctum'])->prefix('orders')->name('orders.')->group(function () {
-    Route::get('/', [OrderController::class, 'index'])->can('viewAny', Order::class);
-    Route::get('{order}', [OrderController::class, 'show'])->middleware(['can:view,order']);
-    Route::post('/', [OrderController::class, 'store'])->can('create', Order::class);
-    // Route::post('{id}/update', [OrderController::class, 'update']);
-    // Route::post('{id}/delete', [OrderController::class, 'delete']);
-
-    // Route::get('pay');
-});
+//     // Route::get('pay');
+// });
 
 Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
     return $request->user();

@@ -20,6 +20,12 @@ return [
          'canceledByHead' => '15',
       ],
    ],
+   'payment' => [
+      'status' => [
+         'pending' => 1,
+         'canceled' => 2,
+      ],
+   ],
    'roles' => [
       'admin' => 1,
       'expert' => 2,

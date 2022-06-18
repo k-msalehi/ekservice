@@ -14,7 +14,7 @@ class OrderResource extends JsonResource
      */
     public function toArray($request)
     {
-        return [
+        $order =  [
             'id' => $this->id,
             'user_id' => $this->user_id,
             'device_brand' => $this->device_brand,
@@ -37,5 +37,16 @@ class OrderResource extends JsonResource
             'status_text' => $this->status_text,
             'created_at' => $this->created_at,
         ];
+
+        if (auth('sanctum')->user()->role == config('constants.roles.admin') || auth('sanctum')->user()->role == config('constants.roles.expert'))
+            $order['payments'] = $this->payments;
+        elseif (auth('sanctum')->user()->role == config('constants.roles.customer'))
+            $order['payments'] = $this->payments()->get([
+                'id',   'user_id', 'amount', 'ref_id', 'bank_sale_order_id', 'bank_sale_refrence_id', 'status', 'created_at', 'updated_at'
+            ]);
+
+        // if (auth('sanctum')->user()->role == config('constants.roles.admin') || auth('sanctum')->user()->role == config('constants.roles.expert'))
+        //     $order['notes'] = $this->notes();
+        return $order;
     }
 }

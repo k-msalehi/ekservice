@@ -30,7 +30,7 @@ class Order extends Model
     {
         return $this->hasMany(Payment::class, 'order_id', 'id');
     }
-    
+
     public function getStatusTextAttribute()
     {
         switch ($this->status) {
@@ -75,6 +75,11 @@ class Order extends Model
     public function meta()
     {
         return $this->hasMany(OrderMeta::class, 'order_id', 'id');
+    }
+
+    public function notes()
+    {
+        return OrderMeta::where('order_id', $this->id)->where('name', 'note')->get();
     }
 
     public function scopeFilter($query, $data)

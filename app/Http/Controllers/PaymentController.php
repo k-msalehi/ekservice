@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Payment;
+use App\Models\Order;
+use App\Models\Payment as ModelPayment;
 use Illuminate\Http\Request;
+use Shetabit\Multipay\Invoice;
+use Shetabit\Payment\Facade\Payment;
+
 
 class PaymentController extends Controller
 {
@@ -22,9 +26,26 @@ class PaymentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function pay(Order $order)
     {
-        //
+        $createdPayment = ModelPayment::where('user_id', auth('sanctum')->user()->id)->where('status', config('constants.payment.status.pending'))->first();
+        if ($createdPayment) {
+            $createdPayment->status = config('constants.payment.status.canceled');
+            $createdPayment->save();
+        }
+
+        $order->requested_price ??= 25000;
+        return Payment::purchase(
+            (new Invoice)->amount($order->requested_price),
+            function ($driver, $transactionId) use ($order) {
+                $payment = new ModelPayment();
+                $payment->amount = $order->requested_price;
+                $payment->user_id = auth('sanctum')->user()->id;
+                $payment->order_id = $order->id;
+                $payment->ref_id = $transactionId;
+                $payment->save();
+            }
+        )->pay()->toJson();
     }
 
     /**
@@ -33,9 +54,9 @@ class PaymentController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function check(Request $request)
     {
-        //
+        dd($request);
     }
 
     /**
