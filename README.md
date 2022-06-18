@@ -323,6 +323,7 @@ device_model
 lat
 lon
 ```
+---
 
 add new note to order `POST /admin/orders/{order-id}/note`
 
@@ -347,8 +348,10 @@ Response on success:
     }
 }
 ```
+---
 
 get notes of an order `GET /admin/orders/{order-id}/note`
+---
 
 get payment token and url `POST /pay/order/{order-number}`
 
