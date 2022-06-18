@@ -350,6 +350,19 @@ Response on success:
 
 get notes of an order `GET /admin/orders/{order-id}/note`
 
+get payment token and url `POST /pay/order/{order-number}`
+
+Example response on success
+```
+{
+  "action": "https://banktest.ir/gateway/pgw.bpm.bankmellat.ir/pgwchannel/startpay.mellat",
+  "inputs": {
+    "RefId": "ODE2YTY2Y2JKM2JK"
+  },
+  "method": "POST"
+}
+```
+
 ---
 
 **Create new user**
