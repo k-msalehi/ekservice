@@ -23,6 +23,7 @@ return new class extends Migration
             $table->string('bank_sale_refrence_id')->default('');; // bank sale reference id (transaction id)
             $table->unsignedTinyInteger('status')->default(config('constants.payment.status.pending'));
             $table->string('note')->default('');
+            $table->string('card_info')->default('');
 
             $table->timestamps();
         });

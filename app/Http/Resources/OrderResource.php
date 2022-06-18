@@ -42,7 +42,7 @@ class OrderResource extends JsonResource
             $order['payments'] = $this->payments;
         elseif (auth('sanctum')->user()->role == config('constants.roles.customer'))
             $order['payments'] = $this->payments()->get([
-                'id',   'user_id', 'amount', 'ref_id', 'bank_sale_order_id', 'bank_sale_refrence_id', 'status', 'created_at', 'updated_at'
+                'id', 'user_id', 'amount', 'ref_id', 'bank_sale_order_id', 'bank_sale_refrence_id', 'status', 'created_at', 'updated_at'
             ]);
 
         // if (auth('sanctum')->user()->role == config('constants.roles.admin') || auth('sanctum')->user()->role == config('constants.roles.expert'))

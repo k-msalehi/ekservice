@@ -24,6 +24,7 @@ return [
       'status' => [
          'pending' => 1,
          'canceled' => 2,
+         'paid' => 3,
       ],
    ],
    'roles' => [

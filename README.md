@@ -356,7 +356,7 @@ get notes of an order `GET /admin/orders/{order-id}/note`
 
 ---
 
-get payment token and url `POST /pay/order/{order-number}`
+get payment token and url `POST /pay/order/{order-id}`
 
 Example response on success
 ```

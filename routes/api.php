@@ -25,13 +25,20 @@ use Shetabit\Payment\Facade\Payment;
 
 Route::get('test', function () {
     // phpinfo();exit();
-    return Payment::purchase(
-        (new Invoice)->amount(1000),
+    $invoice = new Invoice;
+    $invoice->amount(10000);
+    $invoice->detail('detailName', 'your detail goes here');
+
+    return Payment::callbackUrl(url('api/check'))->purchase(
+        $invoice,
         function ($driver, $transactionId) {
             // Store transactionId in database.
             // We need the transactionId to verify payment in the future.
         }
     )->pay()->render();
+});
+Route::any('check', function () {
+    dd(request()->all());
 });
 
 
@@ -93,10 +100,10 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::get('{order}', [OrderController::class, 'show'])->middleware(['can:view,order']);
         Route::post('/', [OrderController::class, 'store'])->can('create', Order::class);
     });
-    
+
     Route::post('pay/order/{order}', [PaymentController::class, 'pay']);
-    Route::post('pay/check', [PaymentController::class, 'check']);
 });
+Route::post('pay/verify/{payment}', [PaymentController::class, 'verify']);
 
 
 // Route::middleware(['auth:sanctum'])->prefix('orders')->name('orders.')->group(function () {

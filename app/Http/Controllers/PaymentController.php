@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Order;
 use App\Models\Payment as ModelPayment;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Shetabit\Multipay\Exceptions\InvalidPaymentException;
 use Shetabit\Multipay\Invoice;
 use Shetabit\Payment\Facade\Payment;
 
@@ -28,17 +30,17 @@ class PaymentController extends Controller
      */
     public function pay(Order $order)
     {
-        $createdPayment = ModelPayment::where('user_id', auth('sanctum')->user()->id)->where('status', config('constants.payment.status.pending'))->first();
-        if ($createdPayment) {
-            $createdPayment->status = config('constants.payment.status.canceled');
-            $createdPayment->save();
-        }
+        $statement = DB::select("SHOW TABLE STATUS LIKE 'payments'");
+        $nextId = $statement[0]->Auto_increment;
+        $this->checkPendingOrders();
 
-        $order->requested_price ??= 25000;
-        return Payment::purchase(
+        if (!$order->requested_price)
+            return app('res')->error('order requested price not set');
+        return Payment::callbackUrl(url("api/pay/verify/{$nextId}"))->purchase(
             (new Invoice)->amount($order->requested_price),
-            function ($driver, $transactionId) use ($order) {
+            function ($driver, $transactionId) use ($order, $nextId) {
                 $payment = new ModelPayment();
+                $payment->id = $nextId;
                 $payment->amount = $order->requested_price;
                 $payment->user_id = auth('sanctum')->user()->id;
                 $payment->order_id = $order->id;
@@ -54,53 +56,40 @@ class PaymentController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function check(Request $request)
+    public function verify(Request $request, ModelPayment $payment)
     {
-        dd($request);
+        try {
+            $cardInfo = '';
+            $receipt = Payment::amount($payment->amount)->transactionId($payment->ref_id)->verify();
+            $payment->status = config('constants.payment.status.paid');
+            $payment->bank_sale_refrence_id = $receipt->getReferenceId();
+            if ($request->get('SaleOrderId'))
+                $payment->bank_sale_order_id = $request->get('SaleOrderId');
+            if ($request->get('SaleOrderId'))
+                $payment->bank_sale_order_id = $request->get('SaleOrderId');
+            if ($request->get('CardHolderPan'))
+                $payment->bank_sale_order_id = $cardInfo .= $request->get('CardHolderPan');
+            $payment->save();
+            return view('payment.verify', compact('payment'));
+        } catch (InvalidPaymentException $exception) {
+            /**
+             * when payment is not verified, it will throw an exception.
+             * We can catch the exception to handle invalid payments.
+             * getMessage method, returns a suitable message that can be used in user interface.
+             **/
+            echo $exception->getMessage();
+        }
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Payment  $payment
-     * @return \Illuminate\Http\Response
+     * check pending orders before creat enew one
      */
-    public function show(Payment $payment)
+    private function checkPendingOrders()
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Payment  $payment
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Payment $payment)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Payment  $payment
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Payment $payment)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Payment  $payment
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Payment $payment)
-    {
-        //
+        $createdPayment = ModelPayment::where('user_id', auth('sanctum')->user()->id)->where('status', config('constants.payment.status.pending'))->first();
+        if ($createdPayment) {
+            $createdPayment->status = config('constants.payment.status.canceled');
+            $createdPayment->save();
+        }
     }
 }
