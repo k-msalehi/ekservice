@@ -162,7 +162,7 @@ Get a single order
 `Get /orders/{order-id}` Or `Get /admin/orders/{order-id}`
 
 Output on success example:  
-*ONLY admin and expert role can see payments note parameter*
+*ONLY admin and expert role can see payments notes parameter*
 
 ```json
 {
