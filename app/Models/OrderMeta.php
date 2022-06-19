@@ -9,6 +9,13 @@ class OrderMeta extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'order_id',
+        'user_id',
+        'name',
+        'value',
+    ];
+
     public function order()
     {
         return $this->belongsTo(Order::class, 'order_id', 'id');

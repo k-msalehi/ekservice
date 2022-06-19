@@ -72,7 +72,7 @@ class Order extends Model
         }
     }
 
-    public function meta()
+    public function metas()
     {
         return $this->hasMany(OrderMeta::class, 'order_id', 'id');
     }
@@ -108,6 +108,14 @@ class Order extends Model
     public function getPaidPriceAttribute()
     {
         return $this->payments()->where('status', config('constants.payment.status.paid'))->sum('amount');
-        
+    }
+
+    public function addNote($value)
+    {
+        $orderMeta = new OrderMeta();
+        $orderMeta->user_id = auth('sanctum')->user()->id;
+        $orderMeta->name = 'note';
+        $orderMeta->value = $value;
+        $orderMeta->save();
     }
 }

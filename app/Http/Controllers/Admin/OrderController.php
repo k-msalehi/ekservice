@@ -42,16 +42,16 @@ class OrderController extends Controller
     {
         $data = $request->validated();
         $note = '';
-        if ($order->rough_price != $data['rough_price']) {
-            $note .= 'قیمت حدودی از ' . $order->rough_price . ' به ' . $data['rough_price'] . ' تغیر کرد.' . '<br>';
+        if ($order->rough_price != $request->get('rough_price')) {
+            $roughPrice = $order->rough_price ?? 'بدون قیمت';
+            $note .= 'قیمت حدودی از ' . $roughPrice . ' به ' . $data['rough_price'] . ' تغیر کرد.';
         }
-        if ($order->requested_price != $data['requested_price']) {
-            $note .= 'مبلغ قابل پرداخت از ' . $order->requested_price . ' به ' . $data['requested_price'] . ' تغیر کرد.' . '<br>';
+        if ($order->requested_price != $request->get('requested_price')) {
+            $note .= 'مبلغ قابل پرداخت از ' . $order->requested_price . ' به ' . $data['requested_price'] . ' تغییر کرد.';
         }
-        if ($order->admin_note != $data['admin_note']) {
-            $note .= 'توضیحات کارشناس از ' . $order->admin_note . ' به ' . $data['admin_note'] . ' تغیر کرد.' . '<br>';
+        if ($order->admin_note != $request->get('admin_note')) {
+            $note .= 'توضیحات کارشناس از ' . $order->admin_note . ' به ' . $data['admin_note'] . ' تغییر کرد.';
         }
-
         $order->rough_price = $data['rough_price'] ?? null;
         $order->requested_price = $data['requested_price'] ?? null;
         $order->final_price = $data['final_price'] ?? null;
@@ -62,9 +62,13 @@ class OrderController extends Controller
         $order->device_model = $data['device_model'] ?? $order->device_model;
         $order->name = $data['name'] ?? $order->name;
         $order->address = $data['address'] ?? $order->address;
-        $order->note = $data['note'] ?? $note;
-        if ($order->save())
+        if ($order->save()) {
+            // if ($note) {
+            //     $order->addNote($note);
+            // }
+            $order->metas()->create(['name' => 'note', 'value' => $note, 'order_id' => $order->id, 'user_id' => auth('sanctum')->user()->id]);
             return app('res')->success(new OrderResource($order), 'Order updated successfully.');
+        }
         return app('res')->error('error while updating order');
     }
 
