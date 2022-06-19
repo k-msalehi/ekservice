@@ -1,20 +1,24 @@
+# documantion
+
 * Set header "Accept: application/json" for all requests.
+
 * `/admin` prefix requires admin role
 
 ## Endpoints
 
-
-**Login/Logout/Register**
+## Login/Logout/Register
 
 `POST /login`
 
 Inputs:
-```
+
+```text
 tel
 ````
 
 Output on success example:
-```
+
+```json
 {
     "success": true,
     "message": "success",
@@ -25,7 +29,8 @@ Output on success example:
 ```
 
 Output on failure example:
-```
+
+```json
 {
     "success": false,
     "message": "validation error",
@@ -40,14 +45,16 @@ Output on failure example:
 `POST /checkLoginCode`
 
 Inputs:
-```
+
+```text
 hash
 tel
 otp
 ````
 
 Output on success example:
-```
+
+```json
 {
     "success": true,
     "message": "success",
@@ -59,7 +66,8 @@ Output on success example:
 ```
 
 Output on failure example:
-```
+
+```json
 {
     "success": false,
     "message": "validation error",
@@ -76,28 +84,32 @@ Output on failure example:
 determine if user is authenticated or not
 
 Response example:
-```
+
+```json
 {"login":false}
 ```
 
 `POST /logout`
 
 Output on success
-```
+
+```json
 {
     "success": true,
     "message": "success",
     "data": "logout success"
 }
 ```
+
 ---
 
-**Submit new order**
+## Submit new order
 
 `POST /orders`
 
 Inputs:
-```
+
+```text
 device_type 
 device_brand 
 device_model
@@ -112,7 +124,8 @@ lon (optional)
 ````
 
 Output on success example:
-```
+
+```json
 {
     "success": true,
     "message": "success",
@@ -143,15 +156,14 @@ Output on success example:
 
 ---
 
-**Get an Order or list of orders**
+## Get an Order or list of orders
 
 Get a single order
 `Get /orders/{order-id}` Or `Get /admin/orders/{order-id}`
 
 Output on success example:
-```
-{
-{
+
+```json
 {
     "success": true,
     "message": "success",
@@ -196,7 +208,8 @@ Output on success example:
 ```
 
 Output on failure example:
-```
+
+```json
 {
     "success": false,
     "message": "object not found"
@@ -210,7 +223,8 @@ Get all orders
 * if `id` parametere exists in url, only order with that id returns as response.
 
 Output on success example:
-```
+
+```json
 {
     "success": true,
     "message": "Orders fetched successfully.",
@@ -281,9 +295,12 @@ Output on success example:
     ]
 }
 ```
+
 ---
-*Order Statuses*
-```
+
+## Order Statuses
+
+```text
 'status' => [
     'submitted' => 1,
     'deliverySent1' => 2,
@@ -303,13 +320,16 @@ Output on success example:
 ],
 
 ```
+
 ---
-**Modify/Manage an order(s)**
+
+## Modify/Manage an order(s)
 
 update an order `POST /admin/orders/{order-id}/update` 
 
 inputs *(all inputs are optional)*:
-```
+
+```json
 name
 address
 rough_price
@@ -329,12 +349,14 @@ lon
 add new note to order `POST /admin/orders/{order-id}/note`
 
 inputs:
-```
+
+```text
 value
 ```
 
 Response on success:
-```
+
+```json
 {
     "success": true,
     "message": "Note added successfully.",
@@ -359,7 +381,8 @@ get notes of an order `GET /admin/orders/{order-id}/note`
 get payment token and url `POST /pay/order/{order-id}`
 
 Example response on success
-```
+
+```json
 {
   "action": "https://banktest.ir/gateway/pgw.bpm.bankmellat.ir/pgwchannel/startpay.mellat",
   "inputs": {
@@ -371,18 +394,20 @@ Example response on success
 
 ---
 
-**Create new user**
+## Create new user
 
 `POST /admin/users`
 
 Inputs:
-```
+
+```text
 tel
 role
 ````
 
 Output on success example:
-```
+
+```json
 {
     "success": true,
     "message": "User created successfully.",
@@ -395,14 +420,15 @@ Output on success example:
     }
 }
 ```
+
 ---
 
-**Get a  user or list of users**
+## Get a  user or list of users
 
 Get a single user `GET admin/users/{user-id}`
 On success example output:
 
-```
+```json
 {
     "success": true,
     "message": "User fetched successfully.",
@@ -421,11 +447,11 @@ On success example output:
 }
 ```
 
-
 get list of users `GET admin/users`
 
 Example output:
-```
+
+```json
 {
     "success": true,
     "message": "Users fetched successfully.",
