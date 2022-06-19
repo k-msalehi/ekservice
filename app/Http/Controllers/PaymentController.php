@@ -65,19 +65,17 @@ class PaymentController extends Controller
             $payment->bank_sale_refrence_id = $receipt->getReferenceId();
             if ($request->get('SaleOrderId'))
                 $payment->bank_sale_order_id = $request->get('SaleOrderId');
-            if ($request->get('SaleOrderId'))
-                $payment->bank_sale_order_id = $request->get('SaleOrderId');
             if ($request->get('CardHolderPan'))
-                $payment->bank_sale_order_id = $cardInfo .= $request->get('CardHolderPan');
+                $payment->card_info = $cardInfo .= $request->get('CardHolderPan');
             $payment->save();
-            return view('payment.verify', compact('payment'));
+            return view('payment.verify-success', compact('payment'));
         } catch (InvalidPaymentException $exception) {
             /**
              * when payment is not verified, it will throw an exception.
              * We can catch the exception to handle invalid payments.
              * getMessage method, returns a suitable message that can be used in user interface.
              **/
-            echo $exception->getMessage();
+            return view('payment.verify-error', compact('payment', 'exception'));
         }
     }
 
