@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\PaymentUpdateReq;
 use App\Http\Resources\PaymentCollection;
 use App\Http\Resources\PaymentResource;
 use App\Models\Payment;
@@ -26,4 +27,13 @@ class PaymentController extends Controller
         return app('res')->success(new PaymentResource($payment));
     }
 
+    public function update(PaymentUpdateReq $request, Payment $payment)
+    {
+        $data = $request->validated();
+        $payment->status = $data['status'] ?? $payment->status;
+        $payment->note = $data['note'] ?? $payment->note;
+        if ($payment->isDirty())
+            $payment->save();
+        return app('res')->success(new PaymentResource($payment), 'Payment updated successfully.');
+    }
 }

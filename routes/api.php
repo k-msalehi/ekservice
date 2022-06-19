@@ -96,6 +96,7 @@ Route::prefix('admin')->name('admin.')->middleware(['auth:sanctum', 'can:viewAdm
 
     Route::prefix('payments')->name('payments.')->group(function () {
         Route::post('{payment}/cancel', [PaymentController::class, 'cancel']);
+        Route::post('{payment}/update', [AdminPaymentController::class, 'update']);
         Route::get('{payment}', [AdminPaymentController::class, 'show']);
         Route::get('/', [AdminPaymentController::class, 'index']);
     });
