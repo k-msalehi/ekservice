@@ -104,4 +104,10 @@ class Order extends Model
 
         return $query;
     }
+
+    public function getPaidPriceAttribute()
+    {
+        return $this->payments()->where('status', config('constants.payment.status.paid'))->sum('amount');
+        
+    }
 }

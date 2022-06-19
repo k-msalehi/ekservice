@@ -17,9 +17,6 @@ class OrderCollection extends ResourceCollection
         // return parent::toArray($request);
         return [
             'data' => $this->collection,
-            'transactions'=>[
-                
-            ],
             'pagination' => [
                 'total' => $this->total(),
                 'count' => $this->count(),

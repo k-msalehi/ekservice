@@ -10,6 +10,7 @@ use App\Http\Resources\OrderCollection;
 use App\Http\Resources\OrderResource;
 use App\Models\Order;
 use App\Models\OrderMeta;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class OrderController extends Controller
@@ -40,7 +41,10 @@ class OrderController extends Controller
     public function update(OrderUpdateReq $request, Order $order)
     {
         $data = $request->validated();
-
+        $note = '';
+        if($order->rough_price != $data['rough_price']){
+            $note .= 'قیمت حدودی از '.$order->rough_price.' به '.$data['rough_price'].' تغیر کرد.';
+        }
         $order->rough_price = $data['rough_price'] ?? null;
         $order->requested_price = $data['requested_price'] ?? null;
         $order->final_price = $data['final_price'] ?? null;
@@ -69,8 +73,9 @@ class OrderController extends Controller
 
     public function getNotes(Order $order)
     {
+        $notes = OrderMeta::where('order_id', $order->id)->where('name', 'note')->orderBy('id', 'DESC')->with('user:id,name,tel')->get();
         return app('res')->success(
-            OrderMeta::where('order_id', $order->id)->where('name', 'note')->orderBy('id', 'DESC')->get()
+            $notes
         );
     }
 }

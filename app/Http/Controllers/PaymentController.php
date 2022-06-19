@@ -30,32 +30,26 @@ class PaymentController extends Controller
      */
     public function pay(Order $order)
     {
-        $statement = DB::select("SHOW TABLE STATUS LIKE 'payments'");
-        $nextId = $statement[0]->Auto_increment;
         $this->checkPendingOrders();
 
         if (!$order->requested_price)
             return app('res')->error('order requested price not set');
-        return Payment::callbackUrl(url("api/pay/verify/{$nextId}"))->purchase(
+
+        $payment = new ModelPayment();
+        $payment->amount = $order->requested_price;
+        $payment->user_id = auth('sanctum')->user()->id;
+        $payment->order_id = $order->id;
+        $payment->save();
+
+        return Payment::callbackUrl(url("api/pay/verify/{$payment->id}"))->purchase(
             (new Invoice)->amount($order->requested_price),
-            function ($driver, $transactionId) use ($order, $nextId) {
-                $payment = new ModelPayment();
-                $payment->id = $nextId;
-                $payment->amount = $order->requested_price;
-                $payment->user_id = auth('sanctum')->user()->id;
-                $payment->order_id = $order->id;
+            function ($driver, $transactionId) use ($order, $payment) {
                 $payment->ref_id = $transactionId;
                 $payment->save();
             }
         )->pay()->toJson();
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function verify(Request $request, ModelPayment $payment)
     {
         try {
@@ -67,7 +61,13 @@ class PaymentController extends Controller
                 $payment->bank_sale_order_id = $request->get('SaleOrderId');
             if ($request->get('CardHolderPan'))
                 $payment->card_info = $cardInfo .= $request->get('CardHolderPan');
+
             $payment->save();
+            $order = Order::find($payment->order_id);
+            $order->paid_price += $payment->amount;
+            $order->requested_price = 0;
+            $order->save();
+
             return view('payment.verify-success', compact('payment'));
         } catch (InvalidPaymentException $exception) {
             /**

@@ -100,11 +100,11 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::get('{order}', [OrderController::class, 'show'])->middleware(['can:view,order']);
         Route::post('/', [OrderController::class, 'store'])->can('create', Order::class);
     });
-
+    
 });
+
 Route::post('pay/order/{order}', [PaymentController::class, 'pay']);
 Route::post('pay/verify/{payment}', [PaymentController::class, 'verify']);
-
 
 // Route::middleware(['auth:sanctum'])->prefix('orders')->name('orders.')->group(function () {
 //     Route::get('/', [OrderController::class, 'index'])->can('viewAny', Order::class);
