@@ -161,7 +161,8 @@ Output on success example:
 Get a single order
 `Get /orders/{order-id}` Or `Get /admin/orders/{order-id}`
 
-Output on success example:
+Output on success example:  
+*ONLY admin and expert role can see payments note parameter*
 
 ```json
 {
@@ -198,7 +199,7 @@ Output on success example:
                 "bank_sale_order_id": "",
                 "bank_sale_refrence_id": "",
                 "status": 2,
-                "note": "", // ONLY for admin and expert role
+                "note": "", 
                 "created_at": "2022-06-18T09:45:18.000000Z",
                 "updated_at": "2022-06-18T09:45:24.000000Z"
             }
