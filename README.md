@@ -329,7 +329,7 @@ update an order `POST /admin/orders/{order-id}/update`
 
 inputs *(all inputs are optional)*:
 
-```json
+```text
 name
 address
 rough_price
