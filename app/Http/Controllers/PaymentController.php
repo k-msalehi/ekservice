@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\PaymentResource;
 use App\Models\Order;
 use App\Models\Payment as ModelPayment;
 use Illuminate\Http\Request;
@@ -20,7 +21,9 @@ class PaymentController extends Controller
      */
     public function index()
     {
-        //
+        $perPage = request()->get('perPage', 2);
+        $payments = ModelPayment::orderby('id', 'desc')->paginate($perPage);
+        return app('res')->success(PaymentResource::collection($payments));
     }
 
     /**

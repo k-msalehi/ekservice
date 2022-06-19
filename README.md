@@ -538,3 +538,68 @@ Example output:
     }
 }
 ```
+
+## Get/update Payments
+
+get list of payments `GET /admin/payments`
+
+Response on success:
+
+```json
+{
+    "success": true,
+    "message": "Payments fetched successfully.",
+    "data": {
+        "data": [
+            {
+                "id": 28,
+                "order_id": 1001,
+                "user_id": 1,
+                "amount": 25000,
+                "ref_id": "YWJJZTZIMZYXY2M1",
+                "bank_sale_order_id": "3503751967",
+                "bank_sale_refrence_id": "46601",
+                "status": 3,
+                "note": "",
+                "card_info": "636214******0624",
+                "created_at": "2022-06-19T08:42:26.000000Z",
+                "updated_at": "2022-06-19T08:44:13.000000Z"
+            }
+        ],
+        "pagination": {
+            "total": 1,
+            "count": 1,
+            "per_page": 25,
+            "current_page": 1,
+            "total_pages": 1,
+            "next": null,
+            "prev": null
+        }
+    }
+}
+```
+
+Get a single payment `GET /admin/payments/{payment-id}`
+
+Response on success:
+
+```json
+{
+    "success": true,
+    "message": "success",
+    "data": {
+        "id": 25,
+        "order_id": 1001,
+        "user_id": 1,
+        "amount": 50000,
+        "ref_id": "NDI4MDDLMWNIZWY1",
+        "bank_sale_order_id": "1820543867",
+        "bank_sale_refrence_id": "46598",
+        "status": 3,
+        "note": "",
+        "card_info": "636214******0624",
+        "created_at": "2022-06-19T08:39:50.000000Z",
+        "updated_at": "2022-06-19T08:40:01.000000Z"
+    }
+}
+```

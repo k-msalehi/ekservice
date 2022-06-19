@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\OrderController as AdminOrderController;
+use App\Http\Controllers\Admin\PaymentController as AdminPaymentController;
 use App\Http\Controllers\Admin\UserController as AdminUserController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\OrderController;
@@ -92,6 +93,12 @@ Route::prefix('admin')->name('admin.')->middleware(['auth:sanctum', 'can:viewAdm
         Route::post('/', [AdminUserController::class, 'store'])->middleware(['can:manageUsers']);
         Route::post('{user}/update', [AdminUserController::class, 'update'])->middleware(['can:manageUsers']);
     });
+
+    Route::prefix('payments')->name('payments.')->group(function () {
+        Route::post('{payment}/cancel', [PaymentController::class, 'cancel']);
+        Route::get('{payment}', [AdminPaymentController::class, 'show']);
+        Route::get('/', [AdminPaymentController::class, 'index']);
+    });
 });
 
 Route::middleware(['auth:sanctum'])->group(function () {
@@ -100,11 +107,11 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::get('{order}', [OrderController::class, 'show'])->middleware(['can:view,order']);
         Route::post('/', [OrderController::class, 'store'])->can('create', Order::class);
     });
-    
 });
 
 Route::post('pay/order/{order}', [PaymentController::class, 'pay']);
 Route::post('pay/verify/{payment}', [PaymentController::class, 'verify']);
+
 
 // Route::middleware(['auth:sanctum'])->prefix('orders')->name('orders.')->group(function () {
 //     Route::get('/', [OrderController::class, 'index'])->can('viewAny', Order::class);
