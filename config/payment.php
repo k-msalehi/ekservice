@@ -61,15 +61,19 @@ return [
             'description' => 'payment using asanpardakht',
         ],
         'behpardakht' => [
-            //https://bpm.shaparak.ir/pgwchannel/services/pgw?wsdl
-            //https://bpm.shaparak.ir/pgwchannel/startpay.mellat
-            'apiPurchaseUrl' => 'https://banktest.ir/gateway/bpm.shaparak.ir/pgwchannel/services/pgw?wsdl',
-            'apiPaymentUrl' => 'https://banktest.ir/gateway/pgw.bpm.bankmellat.ir/pgwchannel/startpay.mellat',
-            'apiVerificationUrl' => 'https://banktest.ir/gateway/bpm.shaparak.ir/pgwchannel/services/pgw?wsdl',
+            'apiPurchaseUrl' => 'https://bpm.shaparak.ir/pgwchannel/services/pgw?wsdl',
+            'apiPaymentUrl' => 'https://bpm.shaparak.ir/pgwchannel/startpay.mellat',
+            'apiVerificationUrl' => 'https://bpm.shaparak.ir/pgwchannel/services/pgw?wsdl',
             'terminalId' => '2105',
             'username' => 'user2105',
             'password' => '34943751',
-            'callbackUrl' => env('APP_URL') . '/api/pay/check',
+            // 'apiPurchaseUrl' => 'https://banktest.ir/gateway/bpm.shaparak.ir/pgwchannel/services/pgw?wsdl',
+            // 'apiPaymentUrl' => 'https://banktest.ir/gateway/pgw.bpm.bankmellat.ir/pgwchannel/startpay.mellat',
+            // 'apiVerificationUrl' => 'https://banktest.ir/gateway/bpm.shaparak.ir/pgwchannel/services/pgw?wsdl',
+            // 'terminalId' => '2105',
+            // 'username' => 'user2105',
+            // 'password' => '34943751',
+            'callbackUrl' => url('api/pay/check'),
             'description' => 'payment using behpardakht',
         ],
         'digipay' => [
