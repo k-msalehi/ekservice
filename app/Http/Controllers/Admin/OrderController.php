@@ -42,16 +42,25 @@ class OrderController extends Controller
     {
         $data = $request->validated();
         $note = '';
-        if ($order->rough_price != $request->get('rough_price')) {
-            $roughPrice = $order->rough_price ?? 'بدون قیمت';
-            $note .= 'قیمت حدودی از ' . $roughPrice . ' به ' . $data['rough_price'] . ' تغیر کرد.';
+        if ($order->rough_price != $request->get('rough_price') && $request->get('rough_price')) {
+            $oldPrice = $order->rough_price ?? 'بدون قیمت';
+            $note .= 'قیمت حدودی از ' . $oldPrice . ' به ' . $data['rough_price'] . " تغییر کرد.\n";
         }
-        if ($order->requested_price != $request->get('requested_price')) {
-            $note .= 'مبلغ قابل پرداخت از ' . $order->requested_price . ' به ' . $data['requested_price'] . ' تغییر کرد.';
+        if ($order->requested_price != $request->get('requested_price') && $request->get('requested_price')) {
+            $oldPrice = $order->requested_price ?? 'بدون قیمت';
+            $note .= 'مبلغ قابل پرداخت از ' . $oldPrice . ' به ' . $data['requested_price'] . " تغییر کرد.\n";
         }
-        if ($order->admin_note != $request->get('admin_note')) {
-            $note .= 'توضیحات کارشناس از ' . $order->admin_note . ' به ' . $data['admin_note'] . ' تغییر کرد.';
+        if ($order->final_price != $request->get('final_price') && $request->get('final_price')) {
+            $oldPrice = $order->final_price ?? 'بدون قیمت';
+            $note .= 'قیمت حدودی از ' . $oldPrice . ' به ' . $data['final_price'] . " تغییر کرد.\n";
         }
+        if ($order->admin_note != $request->get('admin_note') && $request->get('admin_note')) {
+            $note .= 'توضیحات قبلی کارشناس:  ' . $order->admin_note  . ".\n";
+        }
+        if ($order->status != $request->get('status') && $request->get('status')) {
+            $note .= 'وضعیت سفارش از ' . $order->status . ' به ' . $data['status'] . " تغییر کرد.\n";
+        }
+
         $order->rough_price = $data['rough_price'] ?? null;
         $order->requested_price = $data['requested_price'] ?? null;
         $order->final_price = $data['final_price'] ?? null;
@@ -66,7 +75,8 @@ class OrderController extends Controller
             // if ($note) {
             //     $order->addNote($note);
             // }
-            $order->metas()->create(['name' => 'note', 'value' => $note, 'order_id' => $order->id, 'user_id' => auth('sanctum')->user()->id]);
+            if (!empty($note))
+                $order->metas()->create(['name' => 'note', 'value' => $note, 'order_id' => $order->id, 'user_id' => auth('sanctum')->user()->id]);
             return app('res')->success(new OrderResource($order), 'Order updated successfully.');
         }
         return app('res')->error('error while updating order');

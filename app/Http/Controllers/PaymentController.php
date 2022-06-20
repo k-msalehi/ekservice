@@ -21,7 +21,7 @@ class PaymentController extends Controller
      */
     public function index()
     {
-        $perPage = request()->get('perPage', 2);
+        $perPage = request()->get('perPage', 25);
         $payments = ModelPayment::orderby('id', 'desc')->paginate($perPage);
         return app('res')->success(PaymentResource::collection($payments));
     }

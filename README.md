@@ -579,8 +579,7 @@ Response on success:
 }
 ```
 
-Get a single payment `GET /admin/payments/{payment-id}`
-
+Get a single payment `GET /admin/payments/{payment-id}` 
 Response on success:
 
 ```json
