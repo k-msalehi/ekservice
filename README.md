@@ -403,6 +403,8 @@ Inputs:
 
 ```text
 tel
+name (optional)
+email (optional)
 role
 ````
 
