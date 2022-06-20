@@ -539,7 +539,7 @@ Example output:
 }
 ```
 
-## Get/update Payments
+## Get Payments
 
 get list of payments `GET /admin/payments`
 
@@ -599,6 +599,40 @@ Response on success:
         "card_info": "636214******0624",
         "created_at": "2022-06-19T08:39:50.000000Z",
         "updated_at": "2022-06-19T08:40:01.000000Z"
+    }
+}
+```
+
+## Update Payment
+
+`POST /admin/payments/{payment-id}/update`
+
+inputs:
+
+```text
+note
+status
+```
+
+Response on success:
+
+```json
+{
+    "success": true,
+    "message": "Payment updated successfully.",
+    "data": {
+        "id": 25,
+        "order_id": 1001,
+        "user_id": 1,
+        "amount": 50000,
+        "ref_id": "NDI4MDDLMWNIZWY1",
+        "bank_sale_order_id": "1820543867",
+        "bank_sale_refrence_id": "46598",
+        "status": 1,
+        "note": "12",
+        "card_info": "636214******0624",
+        "created_at": "2022-06-19T08:39:50.000000Z",
+        "updated_at": "2022-06-19T13:32:01.000000Z"
     }
 }
 ```
