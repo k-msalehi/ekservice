@@ -28,7 +28,7 @@ class Order extends Model
 
     public function payments()
     {
-        return $this->hasMany(Payment::class, 'order_id', 'id');
+        return $this->hasMany(Payment::class, 'order_id', 'id')->orderBy('id','DESC');;
     }
 
     public function getStatusTextAttribute()

@@ -8,17 +8,15 @@
    <title>نتیجه‌ی پرداخت</title>
 </head>
 <style>
-   p{
+   p,h3,h4{
       text-align: center;
       direction: rtl;
    }
 </style>
 <body>
-   <p>
-      <b>
+   <h4>
          پرداخت با موفقیت انجام شد.
-      </b>
-   </p>
+   </h4>
    <p>
       شماره ارجاع بانک: {{ $payment->bank_sale_refrence_id }}
    </p>

@@ -83,6 +83,7 @@ class AuthController extends Controller
         if (Hash::check($request->get('otp'), $user->otp)) {
             auth()->login($user,true);
             $user->otp_expire = null;
+            $user->otp = null;
             $user->save();
             return app('res')->success(['apiToken' => $user->createToken('apiToken1')->plainTextToken, 'role' => $user->role]);
         } else {

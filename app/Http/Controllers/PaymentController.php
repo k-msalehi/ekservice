@@ -55,19 +55,19 @@ class PaymentController extends Controller
 
     public function verify(Request $request, ModelPayment $payment)
     {
+        if ($payment->status != config('constants.payment.status.pending'))
+            return app('res')->error('payment is not pending');
         try {
-            $cardInfo = '';
             $receipt = Payment::amount($payment->amount)->transactionId($payment->ref_id)->verify();
             $payment->status = config('constants.payment.status.paid');
             $payment->bank_sale_refrence_id = $receipt->getReferenceId();
             if ($request->get('SaleOrderId'))
                 $payment->bank_sale_order_id = $request->get('SaleOrderId');
             if ($request->get('CardHolderPan'))
-                $payment->card_info = $cardInfo .= $request->get('CardHolderPan');
+                $payment->card_info = $request->get('CardHolderPan');
 
             $payment->save();
             $order = Order::find($payment->order_id);
-            $order->paid_price += $payment->amount;
             $order->requested_price = 0;
             $order->save();
 

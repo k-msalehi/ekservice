@@ -32,6 +32,7 @@ class Kavenegar implements SmsInterface
                   'receptor' =>  $to,
                   'token' => $code,
                   'template' => 'servicekala-auth',
+                  'verify' => false
             ]);
             if ($res->successful()) {
                   return true;

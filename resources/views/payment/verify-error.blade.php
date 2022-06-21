@@ -8,17 +8,20 @@
    <title>نتیجه‌ی پرداخت</title>
 </head>
 <style>
-   p{
+   p,
+   h3,
+   h4 {
       text-align: center;
       direction: rtl;
    }
 </style>
+
 <body>
+
+   <h3>
+      خطا در پرداخت
+   </h3>
    <p>
-      <b>
-         خطا در پرداخت
-      </b>
-      <br>
       {{$exception->getMessage()}}
       <br>
       در صورت کسر وجه توسط بانک از حساب شما، مبلغ تا ۷۲ ساعت به حساب شما برگشت داده خواهد شد.
