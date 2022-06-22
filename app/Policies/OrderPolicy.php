@@ -55,7 +55,9 @@ class OrderPolicy
      */
     public function update(User $user, Order $order)
     {
-        //
+        return ($user->role == config('constants.roles.admin') ||
+            $user->role == config('constants.roles.expert') ||
+            $user->id == $order->user_id);
     }
 
     /**

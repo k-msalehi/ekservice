@@ -297,6 +297,41 @@ Output on success example:
 }
 ```
 
+Send cancel request for an order `POST orders/order-id/cancel`
+
+Response on success
+
+```json
+{
+    "success": true,
+    "message": "Order cancel request sent successfully.",
+    "data": {
+        "id": 1002,
+        "user_id": 2,
+        "device_brand": "samsung",
+        "device_type": "mobile",
+        "device_model": "a33",
+        "name": "\u0645\u062d\u0645\u062f \u0635\u0627\u0644\u062d\u06cc",
+        "email": null,
+        "city_id": "301",
+        "address": "\u062e \u0645\u0648\u0644\u0648\u06cc \u062e \u062d\u062c\u062a",
+        "national_id": "4990139593",
+        "lon": "456",
+        "lat": "123",
+        "user_note": "\u062e\u0631\u0627\u0628 \u0647\u0633\u062a",
+        "admin_note": null,
+        "rough_price": null,
+        "requested_price": null,
+        "paid_price": 0,
+        "final_price": null,
+        "status": "13",
+        "status_text": "\u062f\u0631\u062e\u0648\u0627\u0633\u062a \u0644\u063a\u0648 \u0627\u0632 \u0645\u0634\u062a\u0631\u06cc",
+        "created_at": "2022-06-13T08:08:50.000000Z",
+        "payments": []
+    }
+}
+```
+
 ---
 
 ## Order Statuses
@@ -326,7 +361,7 @@ Output on success example:
 
 ## Modify/Manage an order(s)
 
-update an order `POST /admin/orders/{order-id}/update` 
+update an order `POST /admin/orders/{order-id}/update`
 
 inputs *(all inputs are optional)*:
 

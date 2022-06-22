@@ -35,7 +35,7 @@ class UserUpdateReq extends FormRequest
         return [
             'name' => ['nullable', 'string', 'max:64', 'min:3'],
             'email' => ['nullable', 'string', 'email', 'unique:users'],
-            'tel' => ['required', Rule::unique('users')->ignore($this->user->id), new IrMobile],
+            // 'tel' => ['required', Rule::unique('users')->ignore($this->user->id), new IrMobile],
             'role' => ['required', 'string', Rule::in(config('constants.roles'))],
         ];
     }

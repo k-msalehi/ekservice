@@ -36,4 +36,12 @@ class OrderController extends Controller
         else
             return app('res')->error('error while saving order');
     }
+
+    public function cancel(Order $order)
+    {
+        $order->status = config('constants.order.status.cancelRequestByCustomer');
+        $order->save();
+        return app('res')->success(new OrderResource($order), 'Order cancel request sent successfully.');
+
+    }
 }
