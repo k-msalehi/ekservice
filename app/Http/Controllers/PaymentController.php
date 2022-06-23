@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\PaymentCollection;
 use App\Http\Resources\PaymentResource;
 use App\Models\Order;
 use App\Models\Payment as ModelPayment;
@@ -22,15 +23,17 @@ class PaymentController extends Controller
     public function index()
     {
         $perPage = request()->get('perPage', 25);
-        $payments = ModelPayment::orderby('id', 'desc')->paginate($perPage);
-        return app('res')->success(PaymentResource::collection($payments));
+        return  app('res')->success(
+            new PaymentCollection(ModelPayment::where('user_id', auth('sanctum')->user()->id)->orderBy('id', 'DESC')->paginate($perPage)),
+            'payments fetched successfully.'
+        );
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    public function show(ModelPayment $payment)
+    {
+        return app('res')->success(new PaymentResource($payment));
+    }
+
     public function pay(Order $order)
     {
         $this->checkPendingOrders();
@@ -82,9 +85,7 @@ class PaymentController extends Controller
         }
     }
 
-    /**
-     * check pending orders before creat enew one
-     */
+
     private function checkPendingOrders()
     {
         $createdPayment = ModelPayment::where('user_id', auth('sanctum')->user()->id)->where('status', config('constants.payment.status.pending'))->first();

@@ -95,6 +95,7 @@ Route::prefix('admin')->name('admin.')->middleware(['auth:sanctum', 'can:viewAdm
     });
 
     Route::prefix('payments')->name('payments.')->group(function () {
+        Route::post('{payment}/update', [AdminPaymentController::class, 'update']);
         Route::get('{payment}', [AdminPaymentController::class, 'show']);
         Route::get('/', [AdminPaymentController::class, 'index']);
     });
@@ -107,8 +108,11 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::post('{order}/cancel', [OrderController::class, 'cancel'])->middleware(['can:update,order']);
         Route::post('/', [OrderController::class, 'store'])->can('create', Order::class);
     });
+    Route::prefix('payments')->name('payments.')->group(function () {
+        Route::get('{payment}', [PaymentController::class, 'show'])->can('view','payment');
+        Route::get('/', [PaymentController::class, 'index']);
+    });
     Route::post('pay/order/{order}', [PaymentController::class, 'pay']);
-
 });
 
 Route::post('pay/verify/{payment}', [PaymentController::class, 'verify']);

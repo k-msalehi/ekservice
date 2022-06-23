@@ -14,7 +14,7 @@ class OrderController extends Controller
 {
     public function index()
     {
-        $perPage = request()->get('perPage', 30);
+        $perPage = request()->get('perPage', 25);
         // return OrderResource::collection(Order::where('user_id', auth()->user()->id)->orderBy('id', 'DESC')->paginate(30));
         return  app('res')->success(
             new OrderCollection(Order::where('user_id', auth('sanctum')->user()->id)->orderBy('id', 'DESC')->paginate($perPage)),

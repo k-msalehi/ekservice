@@ -40,6 +40,7 @@ class UserController extends Controller
         $user->email = $data['email'] ?? $user->email;
         $user->tel = $data['tel'] ?? $user->tel;
         $user->role = $data['role'] ?? $user->role;
+        $user->status = $data['status'] ?? $user->status;
         if ($user->save())
             return app('res')->success($user, 'User updated successfully.');
         return app('res')->error('error while updating user');

@@ -37,6 +37,7 @@ class UserUpdateReq extends FormRequest
             'email' => ['nullable', 'string', 'email', 'unique:users'],
             // 'tel' => ['required', Rule::unique('users')->ignore($this->user->id), new IrMobile],
             'role' => ['required', 'string', Rule::in(config('constants.roles'))],
+            'status' => ['required', 'string', 'in:0,1'],
         ];
     }
 }
