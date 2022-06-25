@@ -37,7 +37,7 @@ class UserCreateReq extends FormRequest
             'name' => ['nullable', 'string', 'max:64', 'min:3'],
             'email' => ['nullable', 'string', 'email', 'unique:users'],
             'tel' => ['required','unique:users,tel' ,new IrMobile],
-            'role' => ['required', 'string', Rule::in(config('constants.roles'))],
+            'role' => ['required', Rule::in(config('constants.roles'))],
         ];
     }
 }
