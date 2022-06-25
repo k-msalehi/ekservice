@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UserCreateReq;
 use App\Http\Requests\UserUpdateReq;
+use App\Http\Resources\UserCollection;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -14,7 +15,7 @@ class UserController extends Controller
     {
         $perPage = request()->get('perPage', 30);
         return  app('res')->success(
-            User::orderBy('id', 'DESC')->paginate($perPage),
+            new UserCollection(User::orderBy('id', 'DESC')->paginate($perPage)),
             'Users fetched successfully.'
         );
     }
