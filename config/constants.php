@@ -18,6 +18,7 @@ return [
          'cancelRequestByCustomer' => '13',
          'canceledByCustomer' => '14',
          'canceledByHead' => '15',
+         'paymentConfirmationPending' => '16',
       ],
    ],
    'payment' => [

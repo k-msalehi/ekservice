@@ -72,6 +72,7 @@ class PaymentController extends Controller
             $payment->save();
             $order = Order::find($payment->order_id);
             $order->requested_price = 0;
+            $order->status = config('constants.order.status.paymentConfirmationPending');
             $order->save();
 
             return view('payment.verify-success', compact('payment'));

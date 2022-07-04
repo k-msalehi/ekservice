@@ -28,7 +28,7 @@ class Order extends Model
 
     public function payments()
     {
-        return $this->hasMany(Payment::class, 'order_id', 'id')->orderBy('id','DESC');;
+        return $this->hasMany(Payment::class, 'order_id', 'id')->orderBy('id', 'DESC');;
     }
 
     public function getStatusTextAttribute()
@@ -66,6 +66,8 @@ class Order extends Model
                 return 'لغو توسط مشتری';
             case config('constants.order.status.canceledByHead'):
                 return 'لغو توسط مرکز';
+            case config('constants.order.status.paymentConfirmationPending'):
+                return 'منتظر تایید پرداخت';
 
             default:
                 return 'نامشخص';
