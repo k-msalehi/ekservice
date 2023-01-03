@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Log;
 
 class Kavenegar implements SmsInterface
 {
-      private $apiKey = '5A50384832526A49393172734A766B49744B4849594E382B417A6B704B4554636B4F3942346B6E6C6975303D';
+      private $apiKey = 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx';
       private $apiUrl = 'https://api.kavenegar.com/v1/';
       private $sms;
 
